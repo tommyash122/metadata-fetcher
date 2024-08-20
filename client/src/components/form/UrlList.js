@@ -3,7 +3,7 @@ import UrlInput from './UrlInput';
 
 function UrlList({ urls, onChange, onRemoveUrl }) {
   return (
-    <div>
+    <div className="space-y-4">
       {urls.map((url, index) => (
         <UrlInput
           key={index}

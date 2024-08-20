@@ -63,7 +63,7 @@ function App() {
 
 
   return (
-    <div>
+    <div className="container mx-auto p-4">
       <Form
         urls={urls}
         onChange={handleChange}
