@@ -45,7 +45,6 @@ function App() {
     }
 
     try {
-      // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
       const response = await fetchMetadata(urls);
       const metadata = response.metadata;
 

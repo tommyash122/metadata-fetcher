@@ -9,7 +9,6 @@ const metascraper = require('metascraper')([
 const cheerio = require('cheerio');
 const helmet = require('helmet');
 const escapeHtml = require('escape-html');
-// const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 const Joi = require('joi');
 
@@ -22,26 +21,6 @@ app.use(helmet()); // Security middleware
 app.use(cookieParser()); // Parse cookies
 app.use(express.json()); // Parse JSON bodies
 
-// Initialize CSRF protection
-// const csrfProtection = csrf({ cookie: true });
-
-// Apply CSRF protection middleware
-// app.use(csrfProtection); // Initialize CSRF protection middleware
-
-// Middleware to set the CSRF token cookie
-// app.use((req, res, next) => {
-//   try {
-//     res.cookie('XSRF-TOKEN', req.csrfToken(), {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === 'production', // Ensure secure cookies in production
-//       sameSite: 'strict',
-//     });
-//     next();
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
 // Apply rate limiting
 const limiter = rateLimit({
   windowMs: 1000, // 1 second window
@@ -50,7 +29,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Main route (no CSRF needed here since it's a GET request)
+// Main route 
 app.get('/', (req, res) => {
   const title = escapeHtml('Metadata Fetcher');
 
@@ -69,7 +48,7 @@ app.get('/', (req, res) => {
   `);
 });
 
-// Protected route for fetching metadata (CSRF protection applied)
+// Protected route for fetching metadata
 app.post('/fetch-metadata', async (req, res) => {
   const { error } = Joi.array().items(Joi.string().uri()).min(3).required().validate(req.body.urls);
 
