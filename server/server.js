@@ -11,14 +11,18 @@ const helmet = require('helmet');
 const escapeHtml = require('escape-html');
 const cookieParser = require('cookie-parser');
 const Joi = require('joi');
+const csrf = require('csurf');
 
 const app = express();
+
+const csrfProtection = csrf({ cookie: { secure: true, httpOnly: true } });
 
 // Set up security middleware
 app.use(helmet()); // Security middleware
 
 // Set up middleware for parsing cookies and JSON bodies
 app.use(cookieParser()); // Parse cookies
+app.use(csrfProtection);
 app.use(express.json()); // Parse JSON bodies
 
 // Apply rate limiting
@@ -48,8 +52,12 @@ app.get('/', (req, res) => {
   `);
 });
 
+app.get('/csrf-token', (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
+
 // Protected route for fetching metadata
-app.post('/fetch-metadata', async (req, res) => {
+app.post('/fetch-metadata', csrfProtection, async (req, res) => {
   const { error } = Joi.array().items(Joi.string().uri()).min(3).required().validate(req.body.urls);
 
   if (error) {
