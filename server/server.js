@@ -80,7 +80,7 @@ app.post('/fetch-metadata', csrfProtection, async (req, res) => {
 
         return metadata;
       } catch (error) {
-        return { error: `Failed to retrieve metadata for ${url}: ${error.message}` };
+        return { error: `Failed to retrieve metadata for ${url}` };
       }
     });
 
