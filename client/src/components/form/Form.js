@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import UrlList from './UrlList';
 import { Plus } from 'lucide-react';
 import { ClipLoader } from 'react-spinners';
+import { showErrorToast } from '../common/ToastManager';
 
 function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoading }) {
+
+  useEffect(() => {
+    if (error) {
+      showErrorToast(error);
+    }
+  }, [error]);
+
   return (
     <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4">
       <UrlList urls={urls} onChange={onChange} onRemoveUrl={onRemoveUrl} />
@@ -30,8 +38,6 @@ function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoadin
           )}
         </button>
       </div>
-
-      {error && <p className="text-red-500 text-center">{error}</p>}
     </form>
   );
 }
