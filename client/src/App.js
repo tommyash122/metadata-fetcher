@@ -56,7 +56,7 @@ function App() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="font-mono container mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-4">Metadata Fetcher</h1>
       <p className="text-center mb-8">
         Enter the URLs you want to fetch metadata for in the fields below.
