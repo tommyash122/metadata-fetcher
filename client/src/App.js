@@ -27,9 +27,9 @@ function App() {
   };
 
   useEffect(() => {
-    const invalids = urls.map(url => !validator.isURL(url));
+    const invalids = urls.map(url => url.trim() !== '' && !validator.isURL(url));
     setInvalidUrls(invalids);
-  }, [urls]);
+  }, [urls]);  
 
   const handleSubmit = async () => {
     setMetadata([]);
