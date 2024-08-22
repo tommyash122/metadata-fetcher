@@ -6,7 +6,7 @@ import { ClipLoader } from 'react-spinners';
 function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoading }) {
   return (
     <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4">
-      <UrlList urls={urls} onChange={onChange} onRemoveUrl={onRemoveUrl} disabled={isLoading} />
+      <UrlList urls={urls} onChange={onChange} onRemoveUrl={onRemoveUrl} />
       
       <div className="flex justify-center space-x-4">
         <button 
