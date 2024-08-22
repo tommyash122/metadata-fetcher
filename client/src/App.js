@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from './components/form/Form';
 import MetadataDisplay from './components/form/MetadataDisplay';
 import { fetchMetadata } from './services/api';
@@ -9,6 +9,7 @@ function App() {
   const [urls, setUrls] = useState(['', '', '']);
   const [metadata, setMetadata] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [invalidUrls, setInvalidUrls] = useState([]);
 
   const handleChange = (index, value) => {
     const newUrls = [...urls];
@@ -25,13 +26,16 @@ function App() {
     setUrls(newUrls);
   };
 
+  useEffect(() => {
+    const invalids = urls.map(url => !validator.isURL(url));
+    setInvalidUrls(invalids);
+  }, [urls]);
+
   const handleSubmit = async () => {
     setMetadata([]);
     setIsLoading(true);
 
-    // Validate URLs before submitting
-    const invalidUrls = urls.filter(url => !validator.isURL(url));
-    if (invalidUrls.length > 0) {
+    if (invalidUrls.some(isInvalid => isInvalid)) {
       showErrorToast('One or more URLs are invalid.');
       setIsLoading(false);
       return;
@@ -71,6 +75,7 @@ function App() {
         onRemoveUrl={handleRemoveUrl}
         onSubmit={handleSubmit}
         isLoading={isLoading}
+        invalidUrls={invalidUrls}
       />
       <ToastManager />
       {metadata.length > 0 && <MetadataDisplay metadata={metadata} />}

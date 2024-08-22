@@ -1,7 +1,8 @@
 import React from 'react';
 import UrlInput from './UrlInput';
 
-function UrlList({ urls, onChange, onRemoveUrl }) {
+function UrlList({ urls, onChange, onRemoveUrl, invalidUrls }) {
+
   return (
     <div className="p-8 pt-16 max-w-6xl mx-auto">
       {urls.map((url, index) => (
@@ -12,6 +13,7 @@ function UrlList({ urls, onChange, onRemoveUrl }) {
           onChange={onChange}
           onRemoveUrl={onRemoveUrl}
           showRemoveButton={urls.length > 3}
+          isInvalid={invalidUrls[index]}
         />
       ))}
     </div>
