@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Form from './components/form/Form';
 import MetadataDisplay from './components/form/MetadataDisplay';
 import { fetchMetadata } from './services/api';
+import { ToastManager } from './components/form/ToastManager';
 
 function App() {
   const [urls, setUrls] = useState(['', '', '']);
@@ -72,6 +73,7 @@ function App() {
         onSubmit={handleSubmit}
         error={error}
       />
+      <ToastManager />
       {metadata.length > 0 && <MetadataDisplay metadata={metadata} />}
     </div>
   );

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Copy } from 'lucide-react';
+import { showToast } from './ToastManager';
 
 function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton }) {
   const handleCopy = () => {
     navigator.clipboard.writeText(value);
-    alert('Copied to clipboard');
+    showToast('Copied to clipboard!');
   };
 
   return (
