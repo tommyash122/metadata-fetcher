@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Copy, X } from 'lucide-react';
 import { showToast } from '../common/ToastManager';
 
 function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInvalid }) {
+  const [showInvalidMessage, setShowInvalidMessage] = useState(false);
+
+  useEffect(() => {
+    // Clear the message when the user starts typing
+    setShowInvalidMessage(false);
+
+    const handler = setTimeout(() => {
+      setShowInvalidMessage(isInvalid);
+    }, 1000);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, isInvalid]);
+
   const handleCopy = () => {
     navigator.clipboard.writeText(value);
     showToast('Copied to clipboard!');
@@ -18,7 +33,7 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInv
             onChange={(e) => onChange(index, e.target.value)}
             placeholder={`https://example${index + 1}.com`}
             className={`border rounded p-2 w-full focus:outline-none pr-10 ${
-              isInvalid ? 'border-red-400 focus:border-red-500' : 'border-purple-300 focus:border-purple-700 focus:ring-1 focus:ring-purple-600'
+              showInvalidMessage ? 'border-red-400 focus:border-red-500' : 'border-purple-300 focus:border-purple-700 focus:ring-1 focus:ring-purple-600'
             }`}
             required
           />
@@ -40,7 +55,7 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInv
           </button>
         )}
       </div>
-      {isInvalid && <p className="text-red-400 text-sm mt-1">Invalid URL</p>}
+      {showInvalidMessage && <p className="text-red-400 text-sm mt-1">Invalid URL</p>}
     </div>
   );
 }
