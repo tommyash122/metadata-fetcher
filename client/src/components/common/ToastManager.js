@@ -26,7 +26,6 @@ export const showErrorToast = (message) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    autoClose: false,
     autoClose: 10000,
   });
 };
