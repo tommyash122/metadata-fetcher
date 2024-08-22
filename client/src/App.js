@@ -3,6 +3,7 @@ import Form from './components/form/Form';
 import MetadataDisplay from './components/form/MetadataDisplay';
 import { fetchMetadata } from './services/api';
 import { ToastManager, showErrorToast } from './components/common/ToastManager';
+import validator from 'validator';
 
 function App() {
   const [urls, setUrls] = useState(['', '', '']);
@@ -24,22 +25,12 @@ function App() {
     setUrls(newUrls);
   };
 
-  const isValidUrl = (url) => {
-    const urlPattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-    return !!urlPattern.test(url);
-  };
-
   const handleSubmit = async () => {
     setMetadata([]);
     setIsLoading(true);
 
     // Validate URLs before submitting
-    const invalidUrls = urls.filter(url => !isValidUrl(url));
+    const invalidUrls = urls.filter(url => !validator.isURL(url));
     if (invalidUrls.length > 0) {
       showErrorToast('One or more URLs are invalid.');
       setIsLoading(false);
@@ -65,7 +56,12 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold text-center mb-4">Metadata Fetcher</h1>
+      <p className="text-center mb-8">
+        Enter the URLs you want to fetch metadata for in the fields below.
+        You can add or remove URLs as needed, and when you're ready, click Submit to retrieve the metadata.
+      </p>
       <Form
         urls={urls}
         onChange={handleChange}
