@@ -1,6 +1,6 @@
 import React from 'react';
 import { Copy } from 'lucide-react';
-import { showToast } from './ToastManager';
+import { showToast } from '../common/ToastManager';
 
 function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton }) {
   const handleCopy = () => {
@@ -20,9 +20,9 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton }) {
           required
         />
         {value && (
-          <button 
-            type="button" 
-            onClick={handleCopy} 
+          <button
+            type="button"
+            onClick={handleCopy}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 text-purple-700">
             <Copy size={20} />
           </button>
