@@ -1,5 +1,5 @@
 import React from 'react';
-import { Copy } from 'lucide-react';
+import { Copy, X } from 'lucide-react';
 import { showToast } from '../common/ToastManager';
 
 function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton }) {
@@ -32,8 +32,8 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton }) {
         <button
           type="button"
           onClick={() => onRemoveUrl(index)}
-          className="bg-gray-500 text-white px-6 py-2 rounded">
-          Remove
+          className="border border-red-500 text-red-500 font-bold py-2 px-2 rounded shadow flex items-center justify-center bg-white hover:bg-red-100">
+          <X size={20} />
         </button>
       )}
     </div>
