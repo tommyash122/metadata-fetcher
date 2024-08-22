@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
     const invalids = urls.map(url => url.trim() !== '' && !validator.isURL(url));
     setInvalidUrls(invalids);
-  }, [urls]);  
+  }, [urls]);
 
   const handleSubmit = async () => {
     setMetadata([]);
@@ -65,7 +65,7 @@ function App() {
         Metadata Fetcher
       </h1>
       <p className="text-center mb-8">
-        Enter the URLs you want to fetch metadata for in the fields below.
+        Enter the URLs you want to fetch metadata for in the fields below.<br />
         You can add or remove URLs as needed, and when you're ready, click Submit to retrieve the metadata.
       </p>
       <Form
