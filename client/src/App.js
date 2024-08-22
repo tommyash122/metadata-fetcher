@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from './components/form/Form';
 import MetadataDisplay from './components/form/MetadataDisplay';
 import { fetchMetadata } from './services/api';
+import { ToastManager, showErrorToast } from './components/common/ToastManager';
+import validator from 'validator';
 
 function App() {
   const [urls, setUrls] = useState(['', '', '']);
   const [metadata, setMetadata] = useState([]);
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [invalidUrls, setInvalidUrls] = useState([]);
 
   const handleChange = (index, value) => {
     const newUrls = [...urls];
@@ -23,24 +26,18 @@ function App() {
     setUrls(newUrls);
   };
 
-  const isValidUrl = (url) => {
-    const urlPattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-    return !!urlPattern.test(url);
-  };
+  useEffect(() => {
+    const invalids = urls.map(url => url.trim() !== '' && !validator.isURL(url));
+    setInvalidUrls(invalids);
+  }, [urls]);
 
   const handleSubmit = async () => {
-    setError(null);
     setMetadata([]);
+    setIsLoading(true);
 
-    // Validate URLs before submitting
-    const invalidUrls = urls.filter(url => !isValidUrl(url));
-    if (invalidUrls.length > 0) {
-      setError('One or more URLs are invalid.');
+    if (invalidUrls.some(isInvalid => isInvalid)) {
+      showErrorToast('One or more URLs are invalid.');
+      setIsLoading(false);
       return;
     }
 
@@ -50,28 +47,37 @@ function App() {
 
       const errors = metadata.filter(item => item.error);
       if (errors.length > 0) {
-        setError(`Some URLs failed to load: ${errors.map(e => e.error).join(', ')}`);
+        showErrorToast(`Some URLs failed to load: ${errors.map(e => e.error).join(', ')}`);
       }
 
       setMetadata(metadata.filter(item => !item.error));
     } catch (error) {
       console.error('Error fetching metadata:', error);
-      setError('An error occurred while fetching metadata');
+      showErrorToast('An error occurred while fetching metadata');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-
-
   return (
-    <div>
+    <div className="font-mono container mx-auto pt-4 px-16 pb-16">
+      <h1 className="text-4xl font-extrabold text-purple-400 text-center mb-6">
+        Metadata Fetcher
+      </h1>
+      <p className="text-center mb-8">
+        Enter the URLs you want to fetch metadata for in the fields below.<br />
+        You can add or remove URLs as needed, and when you're ready, click Submit to retrieve the metadata.
+      </p>
       <Form
         urls={urls}
         onChange={handleChange}
         onAddUrl={handleAddUrl}
         onRemoveUrl={handleRemoveUrl}
         onSubmit={handleSubmit}
-        error={error}
+        isLoading={isLoading}
+        invalidUrls={invalidUrls}
       />
+      <ToastManager />
       {metadata.length > 0 && <MetadataDisplay metadata={metadata} />}
     </div>
   );
