@@ -27,6 +27,7 @@ export const showErrorToast = (message) => {
     draggable: true,
     progress: undefined,
     autoClose: false,
+    autoClose: 10000,
   });
 };
 
