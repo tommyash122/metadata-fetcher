@@ -56,7 +56,7 @@ function App() {
   };
 
   return (
-    <div className="font-mono container mx-auto p-4">
+    <div className="font-mono container mx-auto pt-4 px-16 pb-16">
       <h1 className="text-4xl font-extrabold text-purple-400 text-center mb-6">
         Metadata Fetcher
       </h1>
