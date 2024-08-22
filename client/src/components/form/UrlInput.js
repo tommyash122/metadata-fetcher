@@ -7,8 +7,8 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton }) {
         type="text"
         value={value}
         onChange={(e) => onChange(index, e.target.value)}
-        placeholder={`URL ${index + 1}`}
-        className="border border-gray-300 rounded p-2 flex-grow"
+        placeholder={`https://example${index + 1}.com`}
+        className="border border-purple-300 rounded p-2 flex-grow"
         required
       />
       {showRemoveButton && (
