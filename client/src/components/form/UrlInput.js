@@ -16,7 +16,7 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton }) {
           value={value}
           onChange={(e) => onChange(index, e.target.value)}
           placeholder={`https://example${index + 1}.com`}
-          className="border border-purple-300 rounded p-2 w-full focus:border-purple-700 focus:ring-1 focus:ring-purple-600 focus:outline-none pr-10"
+          className="border border-purple-300 rounded p-2 w-full focus:border-purple-700 focus:ring-1 focus:ring-purple-600 focus:outline-none pr-10 opacity-60 hover:opacity-60"
           required
         />
         {value && (
