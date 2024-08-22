@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import Form from './components/form/Form';
 import MetadataDisplay from './components/form/MetadataDisplay';
 import { fetchMetadata } from './services/api';
-import { ToastManager } from './components/common/ToastManager';
+import { ToastManager, showErrorToast } from './components/common/ToastManager';
 
 function App() {
   const [urls, setUrls] = useState(['', '', '']);
   const [metadata, setMetadata] = useState([]);
-  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (index, value) => {
@@ -36,14 +35,14 @@ function App() {
   };
 
   const handleSubmit = async () => {
-    setError(null);
     setMetadata([]);
     setIsLoading(true);
 
     // Validate URLs before submitting
     const invalidUrls = urls.filter(url => !isValidUrl(url));
     if (invalidUrls.length > 0) {
-      setError('One or more URLs are invalid.');
+      showErrorToast('One or more URLs are invalid.');
+      setIsLoading(false);
       return;
     }
 
@@ -53,19 +52,17 @@ function App() {
 
       const errors = metadata.filter(item => item.error);
       if (errors.length > 0) {
-        setError(`Some URLs failed to load: ${errors.map(e => e.error).join(', ')}`);
+        showErrorToast(`Some URLs failed to load: ${errors.map(e => e.error).join(', ')}`);
       }
 
       setMetadata(metadata.filter(item => !item.error));
     } catch (error) {
       console.error('Error fetching metadata:', error);
-      setError('An error occurred while fetching metadata');
+      showErrorToast('An error occurred while fetching metadata');
     } finally {
       setIsLoading(false);
     }
   };
-
-
 
   return (
     <div>
@@ -75,7 +72,6 @@ function App() {
         onAddUrl={handleAddUrl}
         onRemoveUrl={handleRemoveUrl}
         onSubmit={handleSubmit}
-        error={error}
         isLoading={isLoading}
       />
       <ToastManager />
