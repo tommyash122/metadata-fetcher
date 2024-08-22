@@ -35,7 +35,7 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInv
           <button
             type="button"
             onClick={() => onRemoveUrl(index)}
-            className="text-purple-700 hover:text-purple-900">
+            className="border border-red-500 text-red-500 font-bold py-2 px-2 rounded shadow flex items-center justify-center bg-white hover:bg-red-100">
             <X size={20} />
           </button>
         )}
