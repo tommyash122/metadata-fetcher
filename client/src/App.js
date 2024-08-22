@@ -8,6 +8,7 @@ function App() {
   const [urls, setUrls] = useState(['', '', '']);
   const [metadata, setMetadata] = useState([]);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (index, value) => {
     const newUrls = [...urls];
@@ -37,6 +38,7 @@ function App() {
   const handleSubmit = async () => {
     setError(null);
     setMetadata([]);
+    setIsLoading(true);
 
     // Validate URLs before submitting
     const invalidUrls = urls.filter(url => !isValidUrl(url));
@@ -58,6 +60,8 @@ function App() {
     } catch (error) {
       console.error('Error fetching metadata:', error);
       setError('An error occurred while fetching metadata');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,6 +76,7 @@ function App() {
         onRemoveUrl={handleRemoveUrl}
         onSubmit={handleSubmit}
         error={error}
+        isLoading={isLoading}
       />
       <ToastManager />
       {metadata.length > 0 && <MetadataDisplay metadata={metadata} />}
