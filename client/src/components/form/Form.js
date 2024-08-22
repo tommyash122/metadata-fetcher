@@ -11,13 +11,13 @@ function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error }) {
         <button 
           type="button" 
           onClick={onAddUrl} 
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow flex items-center">
+          className="border border-purple-500 text-purple-500 font-bold py-2 px-4 rounded shadow flex items-center justify-center bg-white hover:bg-purple-100">
           <Plus size={20} />
         </button>
         
         <button 
           type="submit" 
-          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded shadow">
+          className="bg-purple-400 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow">
           Submit
         </button>
       </div>
