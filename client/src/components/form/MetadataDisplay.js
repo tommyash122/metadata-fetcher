@@ -34,7 +34,7 @@ function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, 
                   <div>
                     <button
                       onClick={() => resetMetadata(index)}
-                      className="text-sm text-red-500 hover:underline mr-2"
+                      className="text-sm text-purple-500 hover:underline mr-2"
                     >
                       Reset
                     </button>
