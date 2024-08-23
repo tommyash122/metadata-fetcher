@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Ellipsis } from 'lucide-react';
 import DOMPurify from 'dompurify';
 
 function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, toggleEditMode, resetMetadata }) {
+  const [openMenus, setOpenMenus] = useState({});
+
+  const toggleMenu = (index) => {
+    setOpenMenus((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+  };
+
   return (
     <div className="pt-16">
       <div className="flex items-center justify-center mb-8">
@@ -16,7 +26,10 @@ function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, 
           const currentImage = editedMetadata[index]?.image || data.image;
 
           return (
-            <div key={index} className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div
+              key={index}
+              className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+            >
               <div className="p-4">
                 <div className="flex justify-between items-center mb-3">
                   <h3 className="text-2xl font-semibold text-gray-800">
@@ -31,19 +44,35 @@ function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, 
                       DOMPurify.sanitize(currentTitle)
                     )}
                   </h3>
-                  <div>
+                  <div className="relative">
                     <button
-                      onClick={() => resetMetadata(index)}
-                      className="text-sm text-purple-500 hover:underline mr-2"
-                    >
-                      Reset
-                    </button>
-                    <button
-                      onClick={() => toggleEditMode(index)}
+                      onClick={() => toggleMenu(index)}
                       className="text-sm text-purple-500 hover:underline"
                     >
-                      {isEditing[index] ? 'Save' : 'Edit'}
+                      <Ellipsis size={20} />
                     </button>
+                    {openMenus[index] && (
+                      <div className="absolute right-0 mt-2 w-28 bg-white border border-purple-200 rounded shadow-lg">
+                        <ul>
+                          <li>
+                            <button
+                              onClick={() => toggleEditMode(index)}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-100 w-full text-left"
+                            >
+                              {isEditing[index] ? 'Save' : 'Edit'}
+                            </button>
+                          </li>
+                          <li>
+                            <button
+                              onClick={() => resetMetadata(index)}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-100 w-full text-left"
+                            >
+                              Reset
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
                 {isEditing[index] ? (
