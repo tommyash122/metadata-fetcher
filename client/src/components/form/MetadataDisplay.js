@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Ellipsis } from 'lucide-react';
 import DOMPurify from 'dompurify';
 
 function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, toggleEditMode, resetMetadata }) {
   const [openMenus, setOpenMenus] = useState({});
+  const menuRefs = useRef([]);
 
   const toggleMenu = (index) => {
     setOpenMenus((prevState) => ({
@@ -11,6 +12,24 @@ function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, 
       [index]: !prevState[index],
     }));
   };
+
+  const handleClickOutside = (event) => {
+    menuRefs.current.forEach((menuRef, index) => {
+      if (menuRef && !menuRef.contains(event.target)) {
+        setOpenMenus((prevState) => ({
+          ...prevState,
+          [index]: false,
+        }));
+      }
+    });
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="pt-16">
@@ -44,7 +63,7 @@ function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, 
                       DOMPurify.sanitize(currentTitle)
                     )}
                   </h3>
-                  <div className="relative">
+                  <div className="relative" ref={(el) => (menuRefs.current[index] = el)}>
                     <button
                       onClick={() => toggleMenu(index)}
                       className="text-sm text-purple-500 hover:underline"
