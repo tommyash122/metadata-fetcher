@@ -49,14 +49,14 @@ function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, 
                 )}
               </div>
               {currentImage && (
-                <div className="relative">
+                <div className="relative px-4">
                   {isEditing[index] ? (
                     <input
                       type="text"
                       value={currentImage}
                       onChange={(e) => onEditMetadata(index, 'image', e.target.value)}
                       placeholder="Edit image URL"
-                      className="absolute bottom-2 left-2 bg-white bg-opacity-75 rounded p-1 text-sm"
+                      className="bottom-2 left-2 bg-white bg-opacity-75 rounded p-1 text-sm"
                     />
                   ) : (
                     <img
