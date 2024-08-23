@@ -1,7 +1,7 @@
 import React from 'react';
 import DOMPurify from 'dompurify';
 
-function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, toggleEditMode }) {
+function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, toggleEditMode, resetMetadata }) {
   return (
     <div className="pt-16">
       <div className="flex items-center justify-center mb-8">
@@ -31,12 +31,20 @@ function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, 
                       DOMPurify.sanitize(currentTitle)
                     )}
                   </h3>
-                  <button
-                    onClick={() => toggleEditMode(index)}
-                    className="text-sm text-purple-500 hover:underline"
-                  >
-                    {isEditing[index] ? 'Save' : 'Edit'}
-                  </button>
+                  <div>
+                    <button
+                      onClick={() => resetMetadata(index)}
+                      className="text-sm text-red-500 hover:underline mr-2"
+                    >
+                      Reset
+                    </button>
+                    <button
+                      onClick={() => toggleEditMode(index)}
+                      className="text-sm text-purple-500 hover:underline"
+                    >
+                      {isEditing[index] ? 'Save' : 'Edit'}
+                    </button>
+                  </div>
                 </div>
                 {isEditing[index] ? (
                   <textarea

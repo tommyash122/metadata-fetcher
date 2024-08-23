@@ -78,6 +78,13 @@ function App() {
     }));
   };
 
+  const resetMetadata = (index) => {
+    setEditedMetadata(prevState => ({
+      ...prevState,
+      [index]: { ...metadata[index] }
+    }));
+  };
+
   return (
     <div className="font-mono container mx-auto pt-4 px-16 pb-16">
       <h1 className="text-4xl font-extrabold text-purple-400 text-center mb-6">
@@ -104,6 +111,7 @@ function App() {
           onEditMetadata={handleEditMetadata}
           isEditing={isEditing}
           toggleEditMode={toggleEditMode}
+          resetMetadata={resetMetadata}
         />
       )}
     </div>
