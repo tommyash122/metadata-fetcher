@@ -6,7 +6,7 @@ function DropdownMenu({ isOpen, onToggle, onEdit, onReset, isEditing }) {
         <div className="relative">
             <button
                 onClick={onToggle}
-                className="text-sm text-purple-500 hover:underline"
+                className="text-sm text-purple-500 hover:underline hover:bg-purple-100 rounded"
             >
                 <Ellipsis size={20} />
             </button>
