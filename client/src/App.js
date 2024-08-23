@@ -8,6 +8,8 @@ import validator from 'validator';
 function App() {
   const [urls, setUrls] = useState(['', '', '']);
   const [metadata, setMetadata] = useState([]);
+  const [editedMetadata, setEditedMetadata] = useState({});
+  const [isEditing, setIsEditing] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [invalidUrls, setInvalidUrls] = useState([]);
 
@@ -59,6 +61,30 @@ function App() {
     }
   };
 
+  const handleEditMetadata = (index, field, value) => {
+    setEditedMetadata(prevState => ({
+      ...prevState,
+      [index]: {
+        ...prevState[index],
+        [field]: value
+      }
+    }));
+  };
+
+  const toggleEditMode = (index) => {
+    setIsEditing(prevState => ({
+      ...prevState,
+      [index]: !prevState[index]
+    }));
+  };
+
+  const resetMetadata = (index) => {
+    setEditedMetadata(prevState => ({
+      ...prevState,
+      [index]: { ...metadata[index] }
+    }));
+  };
+
   return (
     <div className="font-mono container mx-auto pt-4 px-16 pb-16">
       <h1 className="text-4xl font-extrabold text-purple-400 text-center mb-6">
@@ -78,7 +104,16 @@ function App() {
         invalidUrls={invalidUrls}
       />
       <ToastManager />
-      {metadata.length > 0 && <MetadataDisplay metadata={metadata} />}
+      {metadata.length > 0 && (
+        <MetadataDisplay
+          metadata={metadata}
+          editedMetadata={editedMetadata}
+          onEditMetadata={handleEditMetadata}
+          isEditing={isEditing}
+          toggleEditMode={toggleEditMode}
+          resetMetadata={resetMetadata}
+        />
+      )}
     </div>
   );
 }
