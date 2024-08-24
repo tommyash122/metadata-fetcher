@@ -87,9 +87,6 @@ function Home() {
 
   return (
     <div>
-      <h1 className="text-4xl font-extrabold text-purple-400 text-center mb-6">
-        Metadata Fetcher
-      </h1>
       <p className="text-center mb-8">
         Enter the URLs you want to fetch metadata for in the fields below.<br />
         You can add or remove URLs as needed, and when you're ready, click Submit to retrieve the metadata.
