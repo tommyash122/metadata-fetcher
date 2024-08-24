@@ -40,6 +40,7 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInv
           {value && (
             <button
               type="button"
+              title='Copy URL'
               onClick={handleCopy}
               className="absolute right-2 top-1/2 transform -translate-y-1/2 text-purple-700">
               <Copy size={20} />
@@ -49,6 +50,7 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInv
         {showRemoveButton && (
           <button
             type="button"
+            title='Remove URL'
             onClick={() => onRemoveUrl(index)}
             className="border border-red-500 text-red-500 font-bold py-2 px-2 rounded shadow flex items-center justify-center bg-white hover:bg-red-100">
             <X size={20} />
