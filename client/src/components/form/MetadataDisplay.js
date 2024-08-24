@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Ellipsis } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import DropdownMenu from './DropdownMenu'; // Import the new DropdownMenu component
 
