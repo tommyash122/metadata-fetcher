@@ -32,6 +32,15 @@ function Home() {
     localStorage.setItem('urls', JSON.stringify(newUrls));
   };
 
+  const handleReset = () => {
+    setUrls(['', '', '']);
+    setMetadata([]);
+    setEditedMetadata({});
+    setIsEditing({});
+    localStorage.removeItem('urls');
+    localStorage.removeItem('metadata');
+  };
+
   useEffect(() => {
     const invalids = urls.map(url => url.trim() !== '' && !validator.isURL(url));
     setInvalidUrls(invalids);
@@ -104,6 +113,7 @@ function Home() {
         onSubmit={handleSubmit}
         isLoading={isLoading}
         invalidUrls={invalidUrls}
+        onReset={handleReset}
       />
       <ToastManager />
       {metadata.length > 0 && (
