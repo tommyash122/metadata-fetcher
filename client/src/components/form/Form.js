@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import UrlList from './UrlList';
-import { Plus } from 'lucide-react';
+import { Plus, RotateCcw } from 'lucide-react';
 import { ClipLoader } from 'react-spinners';
 import { showErrorToast } from '../common/ToastManager';
 
@@ -17,6 +17,14 @@ function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoadin
       <UrlList urls={urls} onChange={onChange} onRemoveUrl={onRemoveUrl} invalidUrls={invalidUrls}/>
       
       <div className="flex justify-center space-x-4">
+      <button 
+          type="button" 
+          onClick={() => console.log("reset")} 
+          className={`border border-purple-500 text-purple-500 font-bold py-2 px-4 rounded shadow flex items-center justify-center bg-white hover:bg-purple-100 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          disabled={isLoading}
+        >
+          <RotateCcw size={20} />
+        </button>
         <button 
           type="button" 
           onClick={onAddUrl} 
