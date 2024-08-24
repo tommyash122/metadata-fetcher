@@ -2,7 +2,7 @@ import React from 'react';
 
 function About() {
   return (
-    <div>
+    <div className='px-8'>
       <p>
         This application allows you to fetch metadata from any valid URLs. You can enter the URLs, and the app will retrieve information such as the title, description, and images associated with each URL.
       </p>
