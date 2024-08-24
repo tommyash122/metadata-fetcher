@@ -9,10 +9,12 @@ function About() {
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Instructions</h2>
       <ul className="list-disc list-inside mb-4">
         <li>Enter one or more URLs in the input fields on the home page.</li>
-        <li>Use the "Add URL" button to add more input fields if needed.</li>
+        <li>Use the "Plus" button to add more input fields if needed.</li>
         <li>Click "Submit" to fetch the metadata for the entered URLs.</li>
         <li>Invalid URLs will be highlighted with a red border.</li>
         <li>In the results, you can edit the metadata or reset it to its original values.</li>
+        <li>Your data is automatically saved and will be restored when you revisit the page.</li>
+        <li>If you want to start fresh, you can clear the saved data by clicking the "Reset" button.</li>
       </ul>
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Features</h2>
       <ul className="list-disc list-inside mb-4">

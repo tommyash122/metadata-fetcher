@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import UrlList from './UrlList';
-import { Plus, RotateCcw } from 'lucide-react';
+import { Plus, RotateCcw, Send } from 'lucide-react';
 import { ClipLoader } from 'react-spinners';
 import { showErrorToast } from '../common/ToastManager';
 
@@ -42,7 +42,7 @@ function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoadin
           {isLoading ? (
             <ClipLoader size={20} color={"#ffffff"} loading={isLoading} />
           ) : (
-            "Submit"
+            <Send size={20} />
           )}
         </button>
       </div>
