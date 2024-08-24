@@ -6,8 +6,8 @@ import { ToastManager, showErrorToast } from '../components/common/ToastManager'
 import validator from 'validator';
 
 function Home() {
-  const [urls, setUrls] = useState(['', '', '']);
-  const [metadata, setMetadata] = useState([]);
+  const [urls, setUrls] = useState(JSON.parse(localStorage.getItem('urls')) || ['', '', '']);
+  const [metadata, setMetadata] = useState(JSON.parse(localStorage.getItem('metadata')) || []);
   const [editedMetadata, setEditedMetadata] = useState({});
   const [isEditing, setIsEditing] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -17,15 +17,19 @@ function Home() {
     const newUrls = [...urls];
     newUrls[index] = value;
     setUrls(newUrls);
+    localStorage.setItem('urls', JSON.stringify(newUrls));
   };
 
   const handleAddUrl = () => {
-    setUrls([...urls, '']);
+    const newUrls = [...urls, ''];
+    setUrls(newUrls);
+    localStorage.setItem('urls', JSON.stringify(newUrls));
   };
 
   const handleRemoveUrl = (index) => {
     const newUrls = urls.filter((_, i) => i !== index);
     setUrls(newUrls);
+    localStorage.setItem('urls', JSON.stringify(newUrls));
   };
 
   useEffect(() => {
@@ -53,6 +57,7 @@ function Home() {
       }
 
       setMetadata(metadata.filter(item => !item.error));
+      localStorage.setItem('metadata', JSON.stringify(metadata.filter(item => !item.error)));
     } catch (error) {
       console.error('Error fetching metadata:', error);
       showErrorToast('An error occurred while fetching metadata');
