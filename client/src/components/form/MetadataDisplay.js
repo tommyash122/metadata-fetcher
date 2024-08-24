@@ -32,7 +32,7 @@ function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, 
   }, []);
 
   return (
-    <div className="pt-16">
+    <div className="pt-16 px-8">
       <div className="flex items-center justify-center mb-8">
         <div className="w-full border-t border-gray-300"></div>
         <span className="px-4 text-gray-500 text-lg">Results</span>
