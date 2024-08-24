@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DOMPurify from 'dompurify';
-import DropdownMenu from './DropdownMenu'; // Import the new DropdownMenu component
+import DropdownMenu from './DropdownMenu';
 
 function MetadataDisplay({ metadata, editedMetadata, onEditMetadata, isEditing, toggleEditMode, resetMetadata }) {
   const [openMenus, setOpenMenus] = useState({});
