@@ -9,7 +9,7 @@ function App() {
     <Router>
       <div className="font-mono container mx-auto pt-4 pb-16">
         <Header />
-        <div className="mt-8"> {/* Add margin to avoid overlap with the sticky header */}
+        <div className="mt-8">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />

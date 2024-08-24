@@ -9,8 +9,8 @@ function Header() {
                     Metadata Fetcher
                 </h1>
                 <nav className="flex space-x-4">
-                    <Link to="/" className="text-purple-500 hover:text-purple-700">Home</Link>
-                    <Link to="/about" className="text-purple-500 hover:text-purple-700">About</Link>
+                    <Link to="/" className="text-purple-500 hover:text-purple-700 hover:underline">Home</Link>
+                    <Link to="/about" className="text-purple-500 hover:text-purple-700 hover:underline">About</Link>
                 </nav>
             </div>
         </header>
