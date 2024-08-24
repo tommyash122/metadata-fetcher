@@ -19,7 +19,14 @@ function About() {
       <ul className="list-disc list-inside mb-4">
         <li>Edit the fetched metadata directly in the results view.</li>
         <li>Reset the metadata to its original state.</li>
-        <li>Responsive design and interactive UI elements.</li>
+        <li>Copy and paste URLs with ease.</li>
+        <li>Automatic validation mechanism that checks if your URL is valid.</li>
+        <li>Add as many URLs as you like, with a minimum of 3 required.</li>
+        <li>All metadata processing is handled server-side.</li>
+        <li>Responsive design and interactive UI elements, including animations.</li>
+        <li>Implement rate limiting on the server to handle a maximum of 5 requests per second.</li>
+        <li>Unit tests are in place for both the front-end and back-end to ensure reliability.</li>
+        <li>Robust error handling on both the client and server sides.</li>
       </ul>
     </div>
   );
