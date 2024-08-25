@@ -64,8 +64,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/csrf-token', (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
+  try {
+    const token = req.csrfToken();
+    res.json({ csrfToken: token });
+  } catch (error) {
+    console.error('CSRF Token Error:', error);
+    res.status(500).json({ message: 'Failed to generate CSRF token.' });
+  }
 });
+
 
 // Protected route for fetching metadata
 app.post('/fetch-metadata', csrfProtection, async (req, res) => {
