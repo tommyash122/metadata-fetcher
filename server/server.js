@@ -69,7 +69,7 @@ app.get('/csrf-token', (req, res) => {
     res.json({ csrfToken: token });
   } catch (error) {
     console.error('CSRF Token Error:', error);
-    res.status(500).json({ message: 'Failed to generate CSRF token.' });
+    res.status(500).json({ message: `Failed to generate CSRF token. ${error}` });
   }
 });
 
