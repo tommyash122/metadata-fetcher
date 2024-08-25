@@ -2,15 +2,22 @@ import axios from 'axios';
 
 export const fetchMetadata = async (urls) => {
   try {
+    const serverBaseUrl = 'https://metadata-fetcher-server.vercel.app';
+
     // Fetch CSRF token from the server
-    const csrfResponse = await axios.get('/csrf-token');
+    const csrfResponse = await axios.get(`${serverBaseUrl}/csrf-token`);
     const csrfToken = csrfResponse.data.csrfToken;
 
-    const response = await axios.post('/fetch-metadata', { urls }, {
-      headers: {
-        'X-CSRF-Token': csrfToken,
-      },
-    });
+    // Make the request to the server-side API with the CSRF token
+    const response = await axios.post(
+      `${serverBaseUrl}/fetch-metadata`,
+      { urls },
+      {
+        headers: {
+          'X-CSRF-Token': csrfToken,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {
