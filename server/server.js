@@ -17,6 +17,15 @@ const csrf = require('csurf');
 
 const app = express();
 
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  methods: 'GET,POST',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 const csrfProtection = csrf({ cookie: { secure: true, httpOnly: true } });
 
 // Set up security middleware
