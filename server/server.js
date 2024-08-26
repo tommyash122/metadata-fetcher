@@ -13,19 +13,10 @@ const helmet = require('helmet');
 const escapeHtml = require('escape-html');
 const cookieParser = require('cookie-parser');
 const Joi = require('joi');
-// const csrf = require('csurf');
 const crypto = require('crypto');
 const cors = require('cors');
 
 const app = express();
-
-// const csrfProtection = csrf({
-//   cookie: {
-//     secure: true, // Ensures the cookie is sent only over HTTPS
-//     httpOnly: true, // Prevents JavaScript from accessing the cookie
-//     sameSite: 'Strict', // Prevents CSRF from cross-site requests
-//   },
-// });
 
 function generateCSRFToken() {
   return crypto.randomBytes(32).toString('hex');
@@ -42,7 +33,6 @@ app.use(helmet()); // Security middleware
 
 // Set up middleware for parsing cookies and JSON bodies
 app.use(cookieParser()); // Parse cookies
-// app.use(csrfProtection);
 app.use(express.json()); // Parse JSON bodies
 
 // Apply rate limiting
@@ -87,7 +77,6 @@ app.get('/csrf-token', (_req, res) => {
 app.post('/fetch-metadata', async (req, res) => {
   const csrfToken = req.headers['X-CSRF-Token'];
   if (csrfToken !== req.cookies['XSRF-TOKEN']) {
-    console.log("csrfToken", csrfToken);
     return res.status(403).json({ message: 'Invalid CSRF token' });
   }
   // Validate the input URLs
