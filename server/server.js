@@ -85,7 +85,7 @@ app.get('/csrf-token', (_req, res) => {
 
 // Protected route for fetching metadata
 app.post('/fetch-metadata', async (req, res) => {
-  const csrfToken = req.headers['x-csrf-token'] || req.cookies['XSRF-TOKEN'];
+  const csrfToken = req.headers['X-CSRF-Token'];
   if (csrfToken !== req.cookies['XSRF-TOKEN']) {
     console.log("csrfToken", csrfToken);
     return res.status(403).json({ message: 'Invalid CSRF token' });
