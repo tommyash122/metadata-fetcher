@@ -18,15 +18,14 @@ const cors = require('cors');
 
 const app = express();
 
-// const csrfProtection = csrf({
-//   cookie: {
-//     secure: true, // Ensures the cookie is sent only over HTTPS
-//     httpOnly: true, // Prevents JavaScript from accessing the cookie
-//     sameSite: 'Strict', // Prevents CSRF from cross-site requests
-//   },
-// });
+const csrfProtection = csrf({
+  cookie: {
+    secure: true, // Ensures the cookie is sent only over HTTPS
+    httpOnly: true, // Prevents JavaScript from accessing the cookie
+    sameSite: 'Strict', // Prevents CSRF from cross-site requests
+  },
+});
 
-const csrfProtection = csrf();
 
 app.use(cors({
   origin: 'https://metadata-fetcher-seven.vercel.app',
