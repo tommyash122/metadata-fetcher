@@ -26,6 +26,8 @@ const app = express();
 //   },
 // });
 
+const csrfProtection = csrf();
+
 app.use(cors({
   origin: 'https://metadata-fetcher-seven.vercel.app',
   credentials: true,
