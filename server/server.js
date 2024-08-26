@@ -14,10 +14,12 @@ const escapeHtml = require('escape-html');
 const cookieParser = require('cookie-parser');
 const Joi = require('joi');
 const csrf = require('csurf');
+const cors = require('cors');
 
 const app = express();
 
 const csrfProtection = csrf({ cookie: { secure: true, httpOnly: true } });
+app.use(cors());
 
 // Set up security middleware
 app.use(helmet()); // Security middleware
