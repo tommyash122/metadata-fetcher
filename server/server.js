@@ -80,7 +80,7 @@ app.get('/csrf-token', (req, res) => {
 
 
 // Protected route for fetching metadata
-app.post('/fetch-metadata', async (req, res) => {
+app.post('/fetch-metadata', csrfProtection, async (req, res) => {
   const { error } = Joi.array().items(Joi.string().uri()).min(3).required().validate(req.body.urls);
 
   if (error) {
