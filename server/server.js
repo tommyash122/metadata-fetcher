@@ -13,18 +13,23 @@ const helmet = require('helmet');
 const escapeHtml = require('escape-html');
 const cookieParser = require('cookie-parser');
 const Joi = require('joi');
-const csrf = require('csurf');
+// const csrf = require('csurf');
+const crypto = require('crypto');
 const cors = require('cors');
 
 const app = express();
 
-const csrfProtection = csrf({
-  cookie: {
-    secure: true, // Ensures the cookie is sent only over HTTPS
-    httpOnly: true, // Prevents JavaScript from accessing the cookie
-    sameSite: 'Strict', // Prevents CSRF from cross-site requests
-  },
-});
+// const csrfProtection = csrf({
+//   cookie: {
+//     secure: true, // Ensures the cookie is sent only over HTTPS
+//     httpOnly: true, // Prevents JavaScript from accessing the cookie
+//     sameSite: 'Strict', // Prevents CSRF from cross-site requests
+//   },
+// });
+
+function generateCSRFToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
 
 
 app.use(cors({
@@ -37,7 +42,7 @@ app.use(helmet()); // Security middleware
 
 // Set up middleware for parsing cookies and JSON bodies
 app.use(cookieParser()); // Parse cookies
-app.use(csrfProtection);
+// app.use(csrfProtection);
 app.use(express.json()); // Parse JSON bodies
 
 // Apply rate limiting
@@ -67,20 +72,23 @@ app.get('/', (req, res) => {
   `);
 });
 
-app.get('/csrf-token', (req, res) => {
-  try {
-    const token = req.csrfToken();
-    console.log('Generated CSRF Token:', token);
-    res.json({ csrfToken: token });
-  } catch (error) {
-    console.error('CSRF Token Error:', error);
-    res.status(500).json({ message: `Failed to generate CSRF token. ${error.message}` });
-  }
+app.get('/csrf-token', (_req, res) => {
+  const token = generateCSRFToken();
+  res.cookie('XSRF-TOKEN', token, {
+    httpOnly: true, // Ensure the cookie is not accessible via JavaScript
+    secure: true, // Ensure the cookie is only sent over HTTPS
+    sameSite: 'Strict', // Ensure the cookie is not sent with cross-site requests
+  });
+  res.json({ csrfToken: token });
 });
 
 
 // Protected route for fetching metadata
-app.post('/fetch-metadata', csrfProtection, async (req, res) => {
+app.post('/fetch-metadata', async (req, res) => {
+  const csrfToken = req.headers['x-csrf-token'] || req.cookies['XSRF-TOKEN'];
+  if (csrfToken !== req.cookies['XSRF-TOKEN']) {
+    return res.status(403).json({ message: 'Invalid CSRF token' });
+  }
   // Validate the input URLs
   const { error } = Joi.array().items(Joi.string().uri()).min(3).required().validate(req.body.urls);
 

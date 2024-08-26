@@ -5,8 +5,8 @@ export const fetchMetadata = async (urls) => {
     const serverBaseUrl = 'https://metadata-fetcher-server.vercel.app';
 
     // Fetch CSRF token from the server
-    const csrfResponse = await axios.get(`${serverBaseUrl}/csrf-token`, { withCredentials: true });
-    const csrfToken = csrfResponse.data.csrfToken;
+    const csrfTokenResponse = await axios.get(`${serverBaseUrl}/csrf-token`, { withCredentials: true });
+    const csrfToken = csrfTokenResponse.data.csrfToken;
     console.log('Received CSRF Token:', csrfToken);
 
     // Make the request to the server-side API with the CSRF token
