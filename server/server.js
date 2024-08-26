@@ -22,8 +22,6 @@ const csrfProtection = csrf({
   cookie: {
     secure: true,
     httpOnly: true,
-    sameSite: 'Strict',
-    domain: 'metadata-fetcher-server.vercel.app',
   },
 });
 app.use(cors({
