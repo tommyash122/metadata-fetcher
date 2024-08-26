@@ -18,9 +18,16 @@ const cors = require('cors');
 
 const app = express();
 
-const csrfProtection = csrf({ cookie: { secure: false, httpOnly: true } });
+const csrfProtection = csrf({
+  cookie: {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'Strict',
+    domain: 'metadata-fetcher-server.vercel.app',
+  },
+});
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://metadata-fetcher-seven.vercel.app',
   credentials: true,
 }));
 
