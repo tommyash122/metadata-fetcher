@@ -18,8 +18,18 @@ const cors = require('cors');
 
 const app = express();
 
-const csrfProtection = csrf({ cookie: { secure: true, httpOnly: true } });
-app.use(cors());
+const csrfProtection = csrf({
+  cookie: {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'Strict',
+    domain: 'metadata-fetcher-server.vercel.app',
+  },
+});
+app.use(cors({
+  origin: 'https://metadata-fetcher-seven.vercel.app',
+  credentials: true,
+}));
 
 // Set up security middleware
 app.use(helmet()); // Security middleware
