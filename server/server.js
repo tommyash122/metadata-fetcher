@@ -24,7 +24,7 @@ function generateCSRFToken() {
 
 
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: process.env.REACT_APP_CLIENT_URL,
   credentials: true,
 }));
 
@@ -153,7 +153,7 @@ app.post('/fetch-metadata', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.REACT_APP_PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
