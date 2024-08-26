@@ -81,10 +81,14 @@ app.get('/csrf-token', (req, res) => {
 
 // Protected route for fetching metadata
 app.post('/fetch-metadata', csrfProtection, async (req, res) => {
+  // Validate the input URLs
   const { error } = Joi.array().items(Joi.string().uri()).min(3).required().validate(req.body.urls);
 
   if (error) {
-    return res.status(400).json({ message: 'Invalid input: ' + error.details[0].message });
+    return res.status(400).json({
+      message: 'Invalid input',
+      details: error.details.map(detail => detail.message),
+    });
   }
 
   const { urls } = req.body;
@@ -92,25 +96,62 @@ app.post('/fetch-metadata', csrfProtection, async (req, res) => {
   try {
     const metadataPromises = urls.map(async (url) => {
       try {
+        // Make the HTTP request to fetch the HTML content
         const response = await axios.get(url);
         const html = response.data;
+
+        // Use Cheerio and metascraper to extract metadata
         const $ = cheerio.load(html);
         const metadata = await metascraper({ html, url });
 
+        // Check if metadata is found
         if (!metadata.title && !metadata.description && !metadata.image) {
           throw new Error('No metadata found');
         }
 
         return metadata;
       } catch (error) {
-        return { error: `Failed to retrieve metadata for ${url}` };
+        if (error.response) {
+          // HTTP response errors
+          return {
+            error: `Failed to retrieve metadata for ${url}: Received ${error.response.status} ${error.response.statusText}`,
+          };
+        } else if (error.request) {
+          // Network errors
+          return {
+            error: `Failed to retrieve metadata for ${url}: No response received from the server`,
+          };
+        } else {
+          // Other errors (e.g., request setup)
+          return {
+            error: `Failed to retrieve metadata for ${url}: ${error.message}`,
+          };
+        }
       }
     });
 
+    // Wait for all metadata requests to complete
     const metadata = await Promise.all(metadataPromises);
+
+    // Check if any errors occurred during the process
+    const errors = metadata.filter(item => item.error);
+    if (errors.length > 0) {
+      return res.status(206).json({ // 206 Partial Content
+        message: 'Some metadata could not be retrieved',
+        errors,
+        metadata: metadata.filter(item => !item.error),
+      });
+    }
+
+    // Return the successfully retrieved metadata
     res.json({ metadata });
   } catch (error) {
-    res.status(500).json({ message: 'An error occurred while processing your request.' });
+    // Catch any unexpected errors
+    console.error('Unexpected error during metadata retrieval:', error);
+    res.status(500).json({
+      message: 'An internal server error occurred while processing your request.',
+      details: error.message,
+    });
   }
 });
 
