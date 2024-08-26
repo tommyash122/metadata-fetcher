@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const fetchMetadata = async (urls) => {
   try {
-    const serverBaseUrl = 'https://metadata-fetcher-server.vercel.app';
+    const serverBaseUrl = process.env.REACT_APP_SERVER_URL;
 
     // Fetch CSRF token from the server
     const csrfTokenResponse = await axios.get(`${serverBaseUrl}/csrf-token`, { withCredentials: true });
