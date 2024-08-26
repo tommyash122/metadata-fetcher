@@ -18,8 +18,11 @@ const cors = require('cors');
 
 const app = express();
 
-const csrfProtection = csrf({ cookie: { secure: true, httpOnly: true } });
-app.use(cors());
+const csrfProtection = csrf({ cookie: { secure: false, httpOnly: true } });
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
 
 // Set up security middleware
 app.use(helmet()); // Security middleware
