@@ -37,7 +37,7 @@ app.use(helmet()); // Security middleware
 
 // Set up middleware for parsing cookies and JSON bodies
 app.use(cookieParser()); // Parse cookies
-// app.use(csrfProtection);
+app.use(csrfProtection);
 app.use(express.json()); // Parse JSON bodies
 
 // Apply rate limiting
