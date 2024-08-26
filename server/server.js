@@ -24,7 +24,7 @@ function generateCSRFToken() {
 
 
 app.use(cors({
-  origin: 'https://metadata-fetcher-seven.vercel.app',
+  origin: process.env.CLIENT_URL,
   credentials: true,
 }));
 
