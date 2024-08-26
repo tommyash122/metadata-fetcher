@@ -87,7 +87,7 @@ app.get('/csrf-token', (_req, res) => {
 app.post('/fetch-metadata', async (req, res) => {
   const csrfToken = req.headers['x-csrf-token'] || req.cookies['XSRF-TOKEN'];
   if (csrfToken !== req.cookies['XSRF-TOKEN']) {
-    console / log("csrfToken", csrfToken);
+    console.log("csrfToken", csrfToken);
     return res.status(403).json({ message: 'Invalid CSRF token' });
   }
   // Validate the input URLs
