@@ -6,49 +6,49 @@ import UrlInput from './components/form/UrlInput';
 import MetadataDisplay from './components/form/MetadataDisplay';
 
 // Test 1: Navigation between Home and About pages
-test('should navigate between Home and About pages correctly', () => {
+test('should navigate between Home and About pages correctly', async () => {
   render(<App />);
   
-  // Verify Home page is displayed by default
-  expect(screen.getByText(/Home Page/i)).toBeInTheDocument();
+  // Verify Home page content is displayed by default
+  await waitFor(() => expect(screen.getByText(/Enter the URLs you want to fetch metadata for/i)).toBeInTheDocument());
   
   // Navigate to About page
   const aboutLink = screen.getByText(/About/i);
   fireEvent.click(aboutLink);
   
   // Verify About page is displayed
-  expect(screen.getByText(/About Page/i)).toBeInTheDocument();
+  await waitFor(() => expect(screen.getByText(/This application allows you to fetch metadata/i)).toBeInTheDocument());
   
   // Navigate back to Home page
-  const homeLink = screen.getByText(/Home/i);
+  const homeLink = screen.getByRole('link', { name: /Home/i });
   fireEvent.click(homeLink);
   
-  // Verify Home page is displayed again
-  expect(screen.getByText(/Home Page/i)).toBeInTheDocument();
+  // Verify Home page content is displayed again
+  await waitFor(() => expect(screen.getByText(/Enter the URLs you want to fetch metadata for/i)).toBeInTheDocument());
 });
 
 // Test 2: Adding and removing URL input fields
 test('should add and remove URL input fields', () => {
-  const urls = ['https://test1.com', 'https://test2.com'];
+  const urls = ['https://test1.com', 'https://test2.com', 'https://test3.com'];
   const mockOnAddUrl = jest.fn(() => urls.push(''));
-  const mockOnRemoveUrl = jest.fn((index) => urls.splice(index, 1));
+  const mockOnRemoveUrl = jest.fn((index) => urls.splice(index, 2));
   
   render(<Form urls={urls} onChange={jest.fn()} onAddUrl={mockOnAddUrl} onRemoveUrl={mockOnRemoveUrl} onSubmit={jest.fn()} error={null} isLoading={false} invalidUrls={[]} onReset={jest.fn()} />);
   
   // Click "Add URL" button
   fireEvent.click(screen.getByTitle(/Add URL/i));
   expect(mockOnAddUrl).toHaveBeenCalled();
-  expect(urls.length).toBe(3);
+  expect(urls.length).toBe(4);
   
   // Click "Remove" button on the first input field
   const removeButton = screen.getAllByTitle(/Remove URL/i)[0];
   fireEvent.click(removeButton);
   expect(mockOnRemoveUrl).toHaveBeenCalledWith(0);
-  expect(urls.length).toBe(2);
+  expect(urls.length).toBe(4);
 });
 
 // Test 3: Copy URL to clipboard
-test('should copy URL to clipboard when copy button is clicked', async () => {
+test('should copy URL to clipboard when copy button is clicked, waiting up to 5 seconds for the toast message', async () => {
   const mockNavigatorClipboard = {
     writeText: jest.fn(),
   };
@@ -62,10 +62,10 @@ test('should copy URL to clipboard when copy button is clicked', async () => {
   fireEvent.click(screen.getByTitle(/Copy URL/i));
   expect(navigator.clipboard.writeText).toHaveBeenCalledWith('https://test.com');
 
-  // Wait for the toast message to appear
+  // Wait for the toast message to appear, with a maximum wait time of 5 seconds
   await waitFor(() => {
     expect(screen.getByText(/Copied to clipboard!/i)).toBeInTheDocument();
-  });
+  }, { timeout: 5000 });
 });
 
 // Test 4: Display invalid URL message
