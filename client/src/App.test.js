@@ -61,25 +61,60 @@ test('should add and remove URL input fields', () => {
   expect(urls.length).toBe(4);
 });
 
-// Test 3: Copy URL to clipboard
-test('should copy URL to clipboard when copy button is clicked, waiting up to 5 seconds for the toast message', async () => {
-  const mockNavigatorClipboard = {
-    writeText: jest.fn(),
-  };
-  Object.assign(navigator, {
-    clipboard: mockNavigatorClipboard,
+// Test 3: Edit metadata
+test('should edit a current metadata', () => {
+  const metadata = [
+    {
+      title: 'Original Title',
+      description: 'Original Description',
+      image: 'https://example.com/original-image.jpg',
+    },
+  ];
+
+  const editedMetadata = {};
+
+  const mockOnEditMetadata = jest.fn((index, field, value) => {
+    editedMetadata[index] = {
+      ...editedMetadata[index],
+      [field]: value,
+    };
   });
 
-  render(<UrlInput index={0} value="https://test.com" onChange={jest.fn()} onRemoveUrl={jest.fn()} showRemoveButton={true} isInvalid={false} />);
+  const mockToggleEditMode = jest.fn((index) => {
+    editedMetadata[index] = editedMetadata[index] || {};
+  });
 
-  // Click the copy button
-  fireEvent.click(screen.getByTitle(/Copy URL/i));
-  expect(navigator.clipboard.writeText).toHaveBeenCalledWith('https://test.com');
+  const mockResetMetadata = jest.fn((index) => {
+    delete editedMetadata[index];
+  });
 
-  // Wait for the toast message to appear, with a maximum wait time of 5 seconds
-  await waitFor(() => {
-    expect(screen.getByText(/Copied to clipboard!/i)).toBeInTheDocument();
-  }, { timeout: 5000 });
+  const isEditing = { 0: true };
+
+  render(
+    <MetadataDisplay
+      metadata={metadata}
+      editedMetadata={editedMetadata}
+      onEditMetadata={mockOnEditMetadata}
+      isEditing={isEditing}
+      toggleEditMode={mockToggleEditMode}
+      resetMetadata={mockResetMetadata}
+    />
+  );
+
+  // Simulate editing the title
+  const titleInput = screen.getByDisplayValue('Original Title');
+  fireEvent.change(titleInput, { target: { value: 'Edited Title' } });
+  expect(mockOnEditMetadata).toHaveBeenCalledWith(0, 'title', 'Edited Title');
+
+  // Simulate editing the description
+  const descriptionTextarea = screen.getByDisplayValue('Original Description');
+  fireEvent.change(descriptionTextarea, { target: { value: 'Edited Description' } });
+  expect(mockOnEditMetadata).toHaveBeenCalledWith(0, 'description', 'Edited Description');
+
+  // Simulate editing the image URL
+  const imageInput = screen.getByDisplayValue('https://example.com/original-image.jpg');
+  fireEvent.change(imageInput, { target: { value: 'https://example.com/edited-image.jpg' } });
+  expect(mockOnEditMetadata).toHaveBeenCalledWith(0, 'image', 'https://example.com/edited-image.jpg');
 });
 
 // Test 4: Display invalid URL message
