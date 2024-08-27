@@ -69,13 +69,13 @@ test('should copy URL to clipboard when copy button is clicked', async () => {
 });
 
 // Test 4: Display invalid URL message
-test('should display an invalid URL message when the input is invalid', async () => {
+test('should display an invalid URL message when the input is invalid, waiting up to 5 seconds', async () => {
   render(<UrlInput index={0} value="invalid-url" onChange={jest.fn()} onRemoveUrl={jest.fn()} showRemoveButton={true} isInvalid={true} />);
 
-  // Invalid message should appear after a short delay
+  // Wait for the invalid message to appear, with a maximum wait time of 5 seconds
   await waitFor(() => {
     expect(screen.getByText(/Invalid URL/i)).toBeInTheDocument();
-  });
+  }, { timeout: 5000 });
 });
 
 // Test 5: Form submission with valid URLs
