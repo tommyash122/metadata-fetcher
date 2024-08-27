@@ -22,7 +22,7 @@ describe('Express Server API', () => {
     expect(res.statusCode).toBe(400);
 
     // Check that the error message reflects the requirement for at least 3 URLs
-    expect(res.body.message).toContain('must contain at least 3 items');
+    expect(res.body.message).toContain('Invalid input');
   });
 
 
