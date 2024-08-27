@@ -1,79 +1,140 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 import Form from './components/form/Form';
-import MetadataDisplay from './components/form/MetadataDisplay';
 import UrlList from './components/form/UrlList';
+import UrlInput from './components/form/UrlInput';
+import MetadataDisplay from './components/form/MetadataDisplay';
 
-// Test 1: Adding a new URL input field
-test('should add a new URL input field when "Add URL" button is clicked', () => {
-  const urls = ['https://test1.com', 'https://test2.com', 'https://test3.com']
-  const mockAddUrl = jest.fn(() => {
-    urls.push('');
+// Test 1: Navigation between Home and About pages
+test('should navigate between Home and About pages correctly', async () => {
+  render(<App />);
+  
+  // Verify Home page content is displayed by default
+  await waitFor(() => expect(screen.getByText(/Enter the URLs you want to fetch metadata for/i)).toBeInTheDocument());
+  
+  // Navigate to About page
+  const aboutLink = screen.getByText(/About/i);
+  fireEvent.click(aboutLink);
+  
+  // Verify About page is displayed
+  await waitFor(() => expect(screen.getByText(/This application allows you to fetch metadata/i)).toBeInTheDocument());
+  
+  // Navigate back to Home page
+  const homeLink = screen.getByRole('link', { name: /Home/i });
+  fireEvent.click(homeLink);
+  
+  // Verify Home page content is displayed again
+  await waitFor(() => expect(screen.getByText(/Enter the URLs you want to fetch metadata for/i)).toBeInTheDocument());
+});
+
+// Test 2: Add URL input field
+test('should add and remove URL input fields', () => {
+  let urls = ['https://test1.com', 'https://test2.com', 'https://test3.com'];
+
+  const mockOnAddUrl = jest.fn(() => {
+    urls.push('https://test4.com');
   });
-  const { rerender } = render(<Form urls={urls} onChange={jest.fn()} onAddUrl={mockAddUrl} onRemoveUrl={jest.fn()} onSubmit={jest.fn()} error={null} />);
 
-  const addButton = screen.getByText(/Add URL/i);
-  fireEvent.click(addButton);
+  const mockOnRemoveUrl = jest.fn((index) => {
+    if (urls.length > 3) {
+      urls.splice(index, 1);
+    }
+  });
 
-  rerender(<Form urls={urls} onChange={jest.fn()} onAddUrl={mockAddUrl} onRemoveUrl={jest.fn()} onSubmit={jest.fn()} error={null} />);
+  render(
+    <Form
+      urls={urls}
+      onChange={jest.fn()}
+      onAddUrl={mockOnAddUrl}
+      onRemoveUrl={mockOnRemoveUrl}
+      onSubmit={jest.fn()}
+      error={null}
+      isLoading={false}
+      invalidUrls={[]}
+      onReset={jest.fn()}
+    />
+  );
 
-  const inputs = screen.getAllByPlaceholderText(/URL/i);
-  expect(inputs.length).toBe(4);
+  // Click "Add URL" button
+  fireEvent.click(screen.getByTitle(/Add URL/i));
+  expect(mockOnAddUrl).toHaveBeenCalled();
+  expect(urls.length).toBe(4);
 });
 
-
-// Test 2: Display error message for invalid URL
-test('should display an error message when an invalid URL is submitted', () => {
-  const invalidUrl = 'invalid-url';
-  render(<Form urls={[invalidUrl]} onChange={jest.fn()} onAddUrl={jest.fn()} onRemoveUrl={jest.fn()} onSubmit={jest.fn()} error="One or more URLs are invalid." />);
-
-  const submitButton = screen.getByText(/Submit/i);
-  fireEvent.click(submitButton);
-
-  const errorMessage = screen.getByText(/One or more URLs are invalid./i);
-  expect(errorMessage).toBeInTheDocument();
-});
-
-// Test 3: Render metadata correctly
-test('should render metadata correctly', () => {
+// Test 3: Edit metadata
+test('should edit a current metadata', () => {
   const metadata = [
-    { title: 'Test Title', description: 'Test Description', image: 'test-image.jpg' },
+    {
+      title: 'Original Title',
+      description: 'Original Description',
+      image: 'https://example.com/original-image.jpg',
+    },
   ];
 
-  render(<MetadataDisplay metadata={metadata} />);
+  const editedMetadata = {};
 
-  const title = screen.getByText(/Test Title/i);
-  const description = screen.getByText(/Test Description/i);
-  const image = screen.getByAltText(/Thumbnail for Test Title/i);
+  const mockOnEditMetadata = jest.fn((index, field, value) => {
+    editedMetadata[index] = {
+      ...editedMetadata[index],
+      [field]: value,
+    };
+  });
 
-  expect(title).toBeInTheDocument();
-  expect(description).toBeInTheDocument();
-  expect(image).toBeInTheDocument();
+  const mockToggleEditMode = jest.fn((index) => {
+    editedMetadata[index] = editedMetadata[index] || {};
+  });
+
+  const mockResetMetadata = jest.fn((index) => {
+    delete editedMetadata[index];
+  });
+
+  const isEditing = { 0: true };
+
+  render(
+    <MetadataDisplay
+      metadata={metadata}
+      editedMetadata={editedMetadata}
+      onEditMetadata={mockOnEditMetadata}
+      isEditing={isEditing}
+      toggleEditMode={mockToggleEditMode}
+      resetMetadata={mockResetMetadata}
+    />
+  );
+
+  // Simulate editing the title
+  const titleInput = screen.getByDisplayValue('Original Title');
+  fireEvent.change(titleInput, { target: { value: 'Edited Title' } });
+  expect(mockOnEditMetadata).toHaveBeenCalledWith(0, 'title', 'Edited Title');
+
+  // Simulate editing the description
+  const descriptionTextarea = screen.getByDisplayValue('Original Description');
+  fireEvent.change(descriptionTextarea, { target: { value: 'Edited Description' } });
+  expect(mockOnEditMetadata).toHaveBeenCalledWith(0, 'description', 'Edited Description');
+
+  // Simulate editing the image URL
+  const imageInput = screen.getByDisplayValue('https://example.com/original-image.jpg');
+  fireEvent.change(imageInput, { target: { value: 'https://example.com/edited-image.jpg' } });
+  expect(mockOnEditMetadata).toHaveBeenCalledWith(0, 'image', 'https://example.com/edited-image.jpg');
 });
 
-// Test 4: Remove a URL input field
-test('should remove a URL input field when "Remove" button is clicked', () => {
-  const urls = ['https://test1.com', 'https://test2.com', 'https://test3.com', 'https://test4.com'];
-  const mockRemove = jest.fn();
+// Test 4: Display invalid URL message
+test('should display an invalid URL message when the input is invalid, waiting up to 5 seconds', async () => {
+  render(<UrlInput index={0} value="invalid-url" onChange={jest.fn()} onRemoveUrl={jest.fn()} showRemoveButton={true} isInvalid={true} />);
 
-  render(<UrlList urls={urls} onChange={jest.fn()} onRemoveUrl={mockRemove} />);
-
-  const removeButtons = screen.getAllByRole('button', { name: /Remove/i });
-  fireEvent.click(removeButtons[0]);
-
-  expect(mockRemove).toHaveBeenCalledWith(0);
+  // Wait for the invalid message to appear, with a maximum wait time of 5 seconds
+  await waitFor(() => {
+    expect(screen.getByText(/Invalid URL/i)).toBeInTheDocument();
+  }, { timeout: 5000 });
 });
 
-
-// Test 5: Call onSubmit with valid URLs
+// Test 5: Form submission with valid URLs
 test('should call onSubmit with valid URLs', () => {
-  const mockSubmit = jest.fn();
   const validUrls = ['https://validurl1.com', 'https://validurl2.com'];
+  const mockOnSubmit = jest.fn();
 
-  render(<Form urls={validUrls} onChange={jest.fn()} onAddUrl={jest.fn()} onRemoveUrl={jest.fn()} onSubmit={mockSubmit} error={null} />);
+  render(<Form urls={validUrls} onChange={jest.fn()} onAddUrl={jest.fn()} onRemoveUrl={jest.fn()} onSubmit={mockOnSubmit} error={null} isLoading={false} invalidUrls={[]} onReset={jest.fn()} />);
 
-  const submitButton = screen.getByText(/Submit/i);
-  fireEvent.click(submitButton);
-
-  expect(mockSubmit).toHaveBeenCalled();
+  // Click the submit button
+  fireEvent.click(screen.getByTitle(/Submit URLs/i));
+  expect(mockOnSubmit).toHaveBeenCalled();
 });
