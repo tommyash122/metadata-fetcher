@@ -43,4 +43,4 @@ jobs:
               run: cd server && npm install
 
             - name: Run server tests
-              run: cd server && npm test -- --testPathPattern=server.test.js --detectOpenHandles
+              run: cd server && timeout 5m npm test -- --testPathPattern=server.test.js --detectOpenHandles
