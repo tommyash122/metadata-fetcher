@@ -15,6 +15,18 @@ Metadata Fetcher is a powerful and efficient application that allows you to retr
 - **Unit Testing**: Comprehensive tests ensure the reliability of both the front-end and back-end.
 - **Ease of Use**: Intuitive UI with features like adding/removing URLs, editing metadata, and resetting data.
 
+## Continuous Integration and Deployment (CI/CD) 🔄
+
+Our project features a robust CI/CD pipeline that ensures the reliability and quality of our codebase. This pipeline automatically triggers a series of tests every time code is pushed or a pull request is created. Key features of our CI/CD setup include:
+
+- **Client-Side Testing:** 🖥️ The pipeline includes automated tests for the client-side code, ensuring that the front-end functions as expected.
+- **Server-Side Testing:** 🛠️ The pipeline also runs comprehensive tests on the server-side code, validating that the back-end services are performing correctly.
+- **Automatic Execution:** 🚦 These tests are executed automatically after every push or pull request, providing immediate feedback and maintaining the integrity of the main branch.
+- **Server Lifecycle Management:** 🔧 The server is intelligently started and stopped within the test environment to prevent conflicts, ensuring clean and reliable test runs.
+
+This setup helps catch issues early in the development process, reducing bugs and improving overall stability.
+
+
 ## 🛠️ Installation
 
 ### Prerequisites
