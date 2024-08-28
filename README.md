@@ -18,7 +18,7 @@ Metadata Fetcher is a powerful and efficient application that allows you to retr
 - **Unit Testing**: Comprehensive tests ensure the reliability of both the front-end and back-end.
 - **Ease of Use**: Intuitive UI with features like adding/removing URLs, editing metadata, and resetting data.
 
-## Continuous Integration and Deployment (CI/CD) 🔄
+## 🔄 Continuous Integration and Deployment (CI/CD) 
 
 Our project features a robust CI/CD pipeline that ensures the reliability and quality of our codebase. This pipeline automatically triggers a series of tests every time code is pushed or a pull request is created. Key features of our CI/CD setup include:
 
