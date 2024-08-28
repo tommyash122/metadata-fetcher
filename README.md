@@ -1,5 +1,8 @@
 # Metadata Fetcher
 
+### Live Website:
+https://metadata-fetcher-seven.vercel.app/
+
 Metadata Fetcher is a powerful and efficient application that allows you to retrieve metadata from any valid URL. Whether you're a developer, a marketer, or just someone curious about the details behind a webpage, this app has you covered. It extracts essential metadata such as titles, descriptions, and images from URLs, making it easier than ever to gather and use this information.
 
 ## 🚀 Features
