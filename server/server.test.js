@@ -1,6 +1,14 @@
 const request = require('supertest');
-const express = require('express');
 const app = require('./server');
+let server;
+
+beforeAll((done) => {
+  server = app.listen(8080, done); // Start the server before running the tests
+});
+
+afterAll((done) => {
+  server.close(done); // Stop the server after all tests are complete
+});
 
 describe('Express Server API', () => {
 
