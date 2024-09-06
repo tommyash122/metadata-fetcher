@@ -83,7 +83,7 @@ The application will now be running at `http://localhost:3000`, with the server 
 
 ## 🧑‍💻 Usage    
 Enter URLs: 
-On the homepage, enter one or more URLs in the input fields.
+On the homepage, enter three or more URLs in the input fields.
 Submit: Click the "Submit" button to fetch metadata for the entered URLs.
 Edit Metadata: You can edit the metadata directly in the results view.
 Reset: If needed, reset the metadata to its original state using the "Reset" button.
