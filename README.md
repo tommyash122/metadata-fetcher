@@ -1,4 +1,4 @@
-# Metadata Fetcher
+# Bolt Fetcher
 
 ### Live Website:
 https://metadata-fetcher-seven.vercel.app/
