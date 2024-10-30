@@ -21,8 +21,8 @@ function Header() {
                     </NavLink>
                 </div>
 
-                {/* Desktop Navigation */}
-                <nav className="hidden sm:flex space-x-6 ml-8">
+                {/* Navigation Links */}
+                <div className="hidden sm:flex flex-grow justify-left space-x-6 ml-8">
                     <NavLink 
                         to="/" 
                         className={({ isActive }) => 
@@ -43,7 +43,7 @@ function Header() {
                     >
                         About
                     </NavLink>
-                </nav>
+                </div>
 
                 {/* Hamburger Menu for Mobile */}
                 <div className="sm:hidden">
