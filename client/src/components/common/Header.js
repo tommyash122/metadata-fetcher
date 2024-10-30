@@ -1,20 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+import LogoIcon from '../../assets/brainwave-symbol.svg';
 
 function Header() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
-        <header className="bg-gray-200 sticky top-0 z-20 w-full border-b border-gray-500 p-4">
-            <div className="container mx-auto flex items-center">
-                <NavLink to="/" className="text-4xl font-extrabold text-purple-400 text-center">
-                    Metadata Fetcher
-                </NavLink>
-                <nav className="flex space-x-4 ml-8">
+        <header className="bg-gradient-to-r from-purple-100 to-purple-300 sticky top-0 z-20 w-full shadow-md p-4">
+            <div className="container mx-auto flex items-center justify-between">
+                {/* Logo with SVG Icon */}
+                <div className="flex items-center space-x-2">
+                    <img src={LogoIcon} alt="Logo Icon" className="w-10 h-10" />
+                    <NavLink to="/" className="text-2xl text-gray-800 drop-shadow-md">
+                        Bolt Fetcher
+                    </NavLink>
+                </div>
+
+                {/* Desktop Navigation */}
+                <nav className="hidden sm:flex space-x-6 ml-8">
                     <NavLink 
                         to="/" 
                         className={({ isActive }) => 
                             isActive 
-                            ? "relative text-xl text-purple-700 after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-purple-700 after:w-full after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
-                            : "relative text-xl text-purple-500 hover:bg-purple-100 hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:h-0.5 hover:after:bg-purple-700 hover:after:w-full hover:after:transform hover:after:scale-x-0 hover:after:origin-left hover:after:transition-transform hover:after:duration-300"
+                            ? "relative text-lg text-gray-800 after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-gray-800 after:w-full after:scale-x-100 after:transition-transform after:duration-300"
+                            : "relative text-lg text-gray-800 opacity-80 hover:opacity-100 hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:h-0.5 hover:after:bg-gray-800 hover:after:w-full hover:after:transform hover:after:scale-x-0 hover:after:transition-transform hover:duration-300"
                         }
                     >
                         Home
@@ -23,14 +37,49 @@ function Header() {
                         to="/about" 
                         className={({ isActive }) => 
                             isActive 
-                            ? "relative text-xl text-purple-700 after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-purple-700 after:w-full after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
-                            : "relative text-xl text-purple-500 hover:bg-purple-100 hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:h-0.5 hover:after:bg-purple-700 hover:after:w-full hover:after:transform hover:after:scale-x-0 hover:after:origin-left hover:after:transition-transform hover:after:duration-300"
+                            ? "relative text-lg text-gray-800 after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-gray-800 after:w-full after:scale-x-100 after:transition-transform after:duration-300"
+                            : "relative text-lg text-gray-800 opacity-80 hover:opacity-100 hover:after:absolute hover:after:left-0 hover:after:bottom-0 hover:after:h-0.5 hover:after:bg-gray-800 hover:after:w-full hover:after:transform hover:after:scale-x-0 hover:after:transition-transform hover:duration-300"
                         }
                     >
                         About
                     </NavLink>
                 </nav>
+
+                {/* Hamburger Menu for Mobile */}
+                <div className="sm:hidden">
+                    <button onClick={toggleMenu} className="text-gray-800 focus:outline-none">
+                        {isMenuOpen ? <X /> : <Menu />}
+                    </button>
+                </div>
             </div>
+
+            {/* Mobile Navigation */}
+            {isMenuOpen && (
+                <nav className="sm:hidden bg-gradient-to-r from-purple-100 to-purple-300 text-gray-800 p-4 space-y-4">
+                    <NavLink 
+                        to="/" 
+                        onClick={toggleMenu} 
+                        className={({ isActive }) => 
+                            isActive 
+                            ? "block text-lg text-gray-800 opacity-100"
+                            : "block text-lg text-gray-800 opacity-80 hover:opacity-100"
+                        }
+                    >
+                        Home
+                    </NavLink>
+                    <NavLink 
+                        to="/about" 
+                        onClick={toggleMenu} 
+                        className={({ isActive }) => 
+                            isActive 
+                            ? "block text-lg text-gray-800 opacity-100"
+                            : "block text-lg text-gray-800 opacity-80 hover:opacity-100"
+                        }
+                    >
+                        About
+                    </NavLink>
+                </nav>
+            )}
         </header>
     );
 }

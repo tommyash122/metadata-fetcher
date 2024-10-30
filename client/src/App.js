@@ -9,7 +9,7 @@ import Footer from './components/common/Footer';
 function App() {
   return (
     <Router>
-      <div className="font-mono container mx-auto pt-4 pb-16">
+      <div className="font-mono container mx-auto pb-16">
         <Header />
         <div className="mt-8">
           <Routes>
