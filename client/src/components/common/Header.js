@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
 function Header() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <header className="bg-gradient-to-r from-purple-400 to-purple-600 sticky top-0 z-20 w-full shadow-md p-4">
             <div className="container mx-auto flex items-center justify-between">
                 <NavLink to="/" className="text-5xl font-extrabold text-white drop-shadow-md">
                     Metadata Fetcher
                 </NavLink>
+
+                {/* Desktop Navigation */}
                 <nav className="hidden sm:flex space-x-6 ml-8">
                     <NavLink 
                         to="/" 
@@ -30,13 +39,42 @@ function Header() {
                         About
                     </NavLink>
                 </nav>
+
                 {/* Hamburger Menu for Mobile */}
                 <div className="sm:hidden">
-                    <button className="text-white">
-                        {/* Add a hamburger icon here, e.g., from Lucide or Heroicons */}
+                    <button onClick={toggleMenu} className="text-white focus:outline-none">
+                        {isMenuOpen ? <X /> : <Menu />}
                     </button>
                 </div>
             </div>
+
+            {/* Mobile Navigation */}
+            {isMenuOpen && (
+                <nav className="sm:hidden bg-gradient-to-r from-purple-400 to-purple-600 text-white p-4 space-y-4">
+                    <NavLink 
+                        to="/" 
+                        onClick={toggleMenu} 
+                        className={({ isActive }) => 
+                            isActive 
+                            ? "block text-lg text-white opacity-100"
+                            : "block text-lg text-white opacity-80 hover:opacity-100"
+                        }
+                    >
+                        Home
+                    </NavLink>
+                    <NavLink 
+                        to="/about" 
+                        onClick={toggleMenu} 
+                        className={({ isActive }) => 
+                            isActive 
+                            ? "block text-lg text-white opacity-100"
+                            : "block text-lg text-white opacity-80 hover:opacity-100"
+                        }
+                    >
+                        About
+                    </NavLink>
+                </nav>
+            )}
         </header>
     );
 }
