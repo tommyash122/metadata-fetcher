@@ -29,10 +29,10 @@ test('should navigate between Home and About pages correctly', async () => {
 
 // Test 2: Add URL input field
 test('should add and remove URL input fields', () => {
-  let urls = ['https://test1.com', 'https://test2.com', 'https://test3.com'];
+  let urls = ['https://test1.com'];
 
   const mockOnAddUrl = jest.fn(() => {
-    urls.push('https://test4.com');
+    urls.push('https://test2.com');
   });
 
   const mockOnRemoveUrl = jest.fn((index) => {
@@ -58,7 +58,7 @@ test('should add and remove URL input fields', () => {
   // Click "Add URL" button
   fireEvent.click(screen.getByTitle(/Add URL/i));
   expect(mockOnAddUrl).toHaveBeenCalled();
-  expect(urls.length).toBe(4);
+  expect(urls.length).toBe(2);
 });
 
 // Test 3: Edit metadata

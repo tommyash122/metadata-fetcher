@@ -18,11 +18,8 @@ describe('Express Server API', () => {
     expect(res.text).toContain('Welcome to the Metadata Fetcher Application');
   });
 
-  it('should handle a case where the client sends less than 3 URLs due to client-side validation miss', async () => {
-    const urls = [
-      'https://example.com',
-      'https://another-example.com',
-    ]; // Only 2 URLs, should not happen normally due to client-side validation
+  it('should handle a case where the client sends less than 1 URLs due to client-side validation miss', async () => {
+    const urls = []; //0 URLs, should not happen normally due to client-side validation
 
     const res = await request(app).post('/fetch-metadata').send({ urls });
 
