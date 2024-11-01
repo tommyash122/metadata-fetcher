@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useMetadata } from '../hooks/MetadataContext';
 
@@ -8,10 +8,6 @@ const MetadataPage = () => {
 
   const metadataIndex = parseInt(index, 10);
   const item = metadata ? metadata[metadataIndex] : null;
-
-  useEffect(() => {
-    console.log(metadata)
-  }, [])
 
   if (!item) {
     return <p className="text-center text-gray-500">Metadata not found.</p>;
