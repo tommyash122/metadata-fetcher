@@ -8,7 +8,7 @@ import { useMetadata } from '../hooks/MetadataContext';
 
 function Home() {
   const [urls, setUrls] = useState(JSON.parse(localStorage.getItem('urls')) || ['']);
-  const [metadata, setMetadata] = useState(JSON.parse(localStorage.getItem('metadata')) || []);
+  const { metadata, setMetadata } = useMetadata();
   const [editedMetadata, setEditedMetadata] = useState({});
   const [isEditing, setIsEditing] = useState({});
   const [isLoading, setIsLoading] = useState(false);

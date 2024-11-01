@@ -5,7 +5,7 @@ const MetadataContext = createContext();
 export const useMetadata = () => useContext(MetadataContext);
 
 export function MetadataProvider({ children }) {
-  const [metadata, setMetadata] = useState(null);
+  const [metadata, setMetadata] = useState(JSON.parse(localStorage.getItem('metadata')) || []);
 
   return (
     <MetadataContext.Provider value={{ metadata, setMetadata }}>
