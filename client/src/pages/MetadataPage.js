@@ -1,9 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useMetadata } from '../hooks/MetadataContext';
 
 
-const MetadataPage = ({ metadata }) => {
+const MetadataPage = () => {
   const { index } = useParams();
+  const { metadata } = useMetadata();
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
