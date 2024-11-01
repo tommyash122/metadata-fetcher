@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from '../components/form/Form';
 import MetadataDisplay from '../components/form/MetadataDisplay';
-import { fetchMetadata } from '../services/api';
+import { fetchMetadata } from '../services/fetchMetadata';
 import { ToastManager, showErrorToast } from '../components/common/ToastManager';
 import validator from 'validator';
 
