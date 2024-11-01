@@ -81,7 +81,8 @@ app.get('/csrf-token', (_req, res) => {
 
 // Protected route for fetching metadata
 app.post('/fetch-metadata', async (req, res) => {
-  const csrfToken = req.headers['x-csrf-token'];
+  const target = process.env.NODE_ENV === 'production' ? 'X-CSRF-Token' : 'x-csrf-token';
+  const csrfToken = req.headers[target];
   if (csrfToken !== req.cookies['XSRF-TOKEN']) {
     return res.status(403).json({ message: 'Invalid CSRF token' });
   }
