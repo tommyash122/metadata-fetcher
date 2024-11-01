@@ -7,7 +7,14 @@ const metascraper = require('metascraper')([
   require('metascraper-title')(),
   require('metascraper-description')(),
   require('metascraper-image')(),
+  require('metascraper-author')(),
+  require('metascraper-date')(),
+  require('metascraper-url')(),
+  require('metascraper-publisher')(),
+  require('metascraper-logo')(),
+  require('metascraper-lang')(),
 ]);
+
 const cheerio = require('cheerio');
 const helmet = require('helmet');
 const escapeHtml = require('escape-html');
