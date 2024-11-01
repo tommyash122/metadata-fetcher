@@ -4,6 +4,7 @@ import MetadataDisplay from '../components/form/MetadataDisplay';
 import { fetchMetadata } from '../services/fetchMetadata';
 import { ToastManager, showErrorToast } from '../components/common/ToastManager';
 import validator from 'validator';
+import { useMetadata } from '../hooks/MetadataContext';
 
 function Home() {
   const [urls, setUrls] = useState(JSON.parse(localStorage.getItem('urls')) || ['']);
