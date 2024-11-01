@@ -23,14 +23,8 @@ function generateCSRFToken() {
 }
 
 
-const allowedOrigins = [
-  process.env.REACT_APP_CLIENT_URL,
-  ...(process.env.NODE_ENV === 'development' ? [process.env.REACT_APP_CLIENT_URL_DEV] : [])
-];
-
-
 app.use(cors({
-  origin: allowedOrigins,
+  origin: process.env.REACT_APP_CLIENT_URL,
   credentials: true,
 }));
 
@@ -72,7 +66,7 @@ app.get('/csrf-token', (_req, res) => {
   const token = generateCSRFToken();
   res.cookie('XSRF-TOKEN', token, {
     httpOnly: true, // Ensure the cookie is not accessible via JavaScript
-    secure: process.env.NODE_ENV === 'production', // Ensure the cookie is only sent over HTTPS and only in production
+    secure: true, // Ensure the cookie is only sent over HTTPS
     sameSite: 'Strict', // Ensure the cookie is not sent with cross-site requests
   });
   res.json({ csrfToken: token });
@@ -81,7 +75,7 @@ app.get('/csrf-token', (_req, res) => {
 
 // Protected route for fetching metadata
 app.post('/fetch-metadata', async (req, res) => {
-  const csrfToken = req.headers['x-csrf-token'];
+  const csrfToken = req.headers['X-CSRF-Token'];
   if (csrfToken !== req.cookies['XSRF-TOKEN']) {
     return res.status(403).json({ message: 'Invalid CSRF token' });
   }
