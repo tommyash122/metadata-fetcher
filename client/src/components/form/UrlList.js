@@ -12,7 +12,7 @@ function UrlList({ urls, onChange, onRemoveUrl, invalidUrls }) {
           value={url}
           onChange={onChange}
           onRemoveUrl={onRemoveUrl}
-          showRemoveButton={urls.length > 3}
+          showRemoveButton={urls.length > 1}
           isInvalid={invalidUrls[index]}
         />
       ))}

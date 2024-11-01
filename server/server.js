@@ -87,7 +87,7 @@ app.post('/fetch-metadata', async (req, res) => {
     return res.status(403).json({ message: 'Invalid CSRF token' });
   }
   // Validate the input URLs
-  const { error } = Joi.array().items(Joi.string().uri()).min(3).required().validate(req.body.urls);
+  const { error } = Joi.array().items(Joi.string().uri()).min(1).required().validate(req.body.urls);
 
   if (error) {
     return res.status(400).json({

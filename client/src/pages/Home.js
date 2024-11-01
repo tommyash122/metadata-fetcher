@@ -6,7 +6,7 @@ import { ToastManager, showErrorToast } from '../components/common/ToastManager'
 import validator from 'validator';
 
 function Home() {
-  const [urls, setUrls] = useState(JSON.parse(localStorage.getItem('urls')) || ['', '', '']);
+  const [urls, setUrls] = useState(JSON.parse(localStorage.getItem('urls')) || ['']);
   const [metadata, setMetadata] = useState(JSON.parse(localStorage.getItem('metadata')) || []);
   const [editedMetadata, setEditedMetadata] = useState({});
   const [isEditing, setIsEditing] = useState({});
@@ -28,12 +28,12 @@ function Home() {
 
   const handleRemoveUrl = (index) => {
     const newUrls = urls.filter((_, i) => i !== index);
-    setUrls(newUrls);
-    localStorage.setItem('urls', JSON.stringify(newUrls));
+    setUrls(newUrls.length > 0 ? newUrls : ['']); // Ensure at least one URL field remains
+    localStorage.setItem('urls', JSON.stringify(newUrls.length > 0 ? newUrls : ['']));
   };
 
   const handleReset = () => {
-    setUrls(['', '', '']);
+    setUrls(['']);
     setMetadata([]);
     setEditedMetadata({});
     setIsEditing({});
