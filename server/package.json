@@ -23,9 +23,15 @@
     "helmet": "^7.1.0",
     "joi": "^17.13.3",
     "metascraper": "^5.45.23",
+    "metascraper-author": "^5.45.25",
+    "metascraper-date": "^5.45.25",
     "metascraper-description": "^5.45.22",
     "metascraper-image": "^5.45.22",
+    "metascraper-lang": "^5.45.25",
+    "metascraper-logo": "^5.45.25",
+    "metascraper-publisher": "^5.45.25",
     "metascraper-title": "^5.45.22",
+    "metascraper-url": "^5.45.25",
     "nodemon": "^3.1.4"
   },
   "devDependencies": {

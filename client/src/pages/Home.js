@@ -4,10 +4,11 @@ import MetadataDisplay from '../components/form/MetadataDisplay';
 import { fetchMetadata } from '../services/fetchMetadata';
 import { ToastManager, showErrorToast } from '../components/common/ToastManager';
 import validator from 'validator';
+import { useMetadata } from '../hooks/MetadataContext';
 
 function Home() {
   const [urls, setUrls] = useState(JSON.parse(localStorage.getItem('urls')) || ['']);
-  const [metadata, setMetadata] = useState(JSON.parse(localStorage.getItem('metadata')) || []);
+  const { metadata, setMetadata } = useMetadata();
   const [editedMetadata, setEditedMetadata] = useState({});
   const [isEditing, setIsEditing] = useState({});
   const [isLoading, setIsLoading] = useState(false);

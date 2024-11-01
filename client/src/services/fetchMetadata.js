@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 export const fetchMetadata = async (urls) => {
   try {
     const serverBaseUrl = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_SERVER_URL_DEV : process.env.REACT_APP_SERVER_URL;
