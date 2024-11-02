@@ -32,7 +32,7 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInv
             value={value}
             onChange={(e) => onChange(index, e.target.value)}
             placeholder={`https://example${index + 1}.com`}
-            className={`border rounded p-2 w-full focus:outline-none pr-10 ${
+            className={`bg-custom-dark  text-white border rounded p-2 w-full focus:outline-none pr-10 ${
               showInvalidMessage ? 'border-red-400 focus:border-red-500' : 'border-purple-300 focus:border-purple-700 focus:ring-1 focus:ring-purple-600'
             }`}
             required
@@ -52,7 +52,7 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInv
             type="button"
             title='Remove URL'
             onClick={() => onRemoveUrl(index)}
-            className="border border-red-500 text-red-500 font-bold py-2 px-2 rounded shadow flex items-center justify-center bg-white hover:bg-red-100">
+            className="border border-red-500 text-red-500 font-bold py-2 px-2 rounded shadow flex items-center justify-center bg-custom-dark hover:bg-red-100">
             <X size={20} />
           </button>
         )}

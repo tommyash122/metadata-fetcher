@@ -28,13 +28,13 @@ function MetadataPreviewCard({
 
     return (
         <div
-            className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+            className="bg-custom-dark text-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
             onClick={handleCardClick}
         >
-            <div className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div className="border border-gray-200 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 <div className="p-4">
                     <div className="flex justify-between items-center mb-3">
-                        <h3 className="text-2xl font-semibold text-gray-800">
+                        <h3 className="text-2xl font-semibold">
                             {isEditing ? (
                                 <input
                                     type="text"
@@ -60,10 +60,10 @@ function MetadataPreviewCard({
                         <textarea
                             value={currentDescription}
                             onChange={(e) => onEditMetadata(index, 'description', e.target.value)}
-                            className="text-gray-600 mb-4 w-full border border-gray-300 rounded p-2"
+                            className=" mb-4 w-full border border-gray-300 rounded p-2"
                         />
                     ) : (
-                        <p className="text-gray-600 mb-4">{DOMPurify.sanitize(currentDescription)}</p>
+                        <p className="mb-4">{DOMPurify.sanitize(currentDescription)}</p>
                     )}
                 </div>
                 {currentImage && (
@@ -74,7 +74,7 @@ function MetadataPreviewCard({
                                 value={currentImage}
                                 onChange={(e) => onEditMetadata(index, 'image', e.target.value)}
                                 placeholder="Edit image URL"
-                                className="bottom-2 left-2 bg-white bg-opacity-75 rounded p-1 text-sm"
+                                className="bottom-2 left-2 bg-opacity-75 rounded p-1 text-sm"
                             />
                         ) : (
                             <img

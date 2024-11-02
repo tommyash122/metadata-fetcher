@@ -21,7 +21,7 @@ function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoadin
           type="button" 
           onClick={onReset} 
           title="Reset Form"
-          className={`border border-purple-500 text-purple-500 font-bold py-2 px-4 rounded shadow flex items-center justify-center bg-white hover:bg-purple-100 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`bg-custom-dark border border-purple-500 text-purple-500 font-bold py-2 px-4 rounded shadow flex items-center justify-center hover:bg-purple-100 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={isLoading}
         >
           <RotateCcw size={20} />
@@ -30,7 +30,7 @@ function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoadin
           type="button" 
           onClick={onAddUrl} 
           title="Add URL"
-          className={`border border-purple-500 text-purple-500 font-bold py-2 px-4 rounded shadow flex items-center justify-center bg-white hover:bg-purple-100 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`bg-custom-dark border border-purple-500 text-purple-500 font-bold py-2 px-4 rounded shadow flex items-center justify-center hover:bg-purple-100 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={isLoading}
         >
           <Plus size={20} />
@@ -39,7 +39,7 @@ function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoadin
         <button 
           type="submit" 
           title="Submit URLs"
-          className="bg-purple-400 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow flex items-center justify-center"
+          className="bg-custom-dark hover:bg-purple-950 text-white font-bold py-2 px-4 rounded shadow flex items-center justify-center"
           disabled={isLoading}
         >
           {isLoading ? (

@@ -102,7 +102,7 @@ function Home() {
 
   return (
     <div>
-      <p className="text-center mb-8">
+      <p className="text-center text-white mb-8">
         Enter the URLs you want to fetch metadata for in the fields below.<br />
         You can add or remove URLs as needed, and when you're ready, click Submit to retrieve the metadata.
       </p>

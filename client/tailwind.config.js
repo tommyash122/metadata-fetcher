@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'custom-dark': 'rgba(14, 12, 21, 0.9)',
+        'custom-dark': 'rgb(14 12 21 / 0.9)',
       },
     },
   },

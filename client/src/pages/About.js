@@ -2,11 +2,11 @@ import React from 'react';
 
 function About() {
   return (
-    <div className='px-8'>
+    <div className='px-8 text-white'>
       <p>
         This application allows you to fetch metadata from any valid URLs. You can enter the URLs, and the app will retrieve information such as the title, description, and images associated with each URL.
       </p>
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Instructions</h2>
+      <h2 className="text-2xl font-bold mb-4">Instructions</h2>
       <ul className="list-disc list-inside mb-4">
         <li>Enter one or more URLs in the input fields on the home page.</li>
         <li>Use the "Plus" button to add more input fields if needed.</li>
@@ -16,7 +16,7 @@ function About() {
         <li>Your data is automatically saved and will be restored when you revisit the page.</li>
         <li>If you want to start fresh, you can clear the saved data by clicking the "Reset" button.</li>
       </ul>
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Features</h2>
+      <h2 className="text-2xl font-bold mb-4">Features</h2>
       <ul className="list-disc list-inside mb-4">
         <li>Edit the fetched metadata directly in the results view.</li>
         <li>Reset the metadata to its original state.</li>
