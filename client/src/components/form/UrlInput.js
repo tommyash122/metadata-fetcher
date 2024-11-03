@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Copy, X } from 'lucide-react';
 import { showToast } from '../common/ToastManager';
+import handleCopy from '../../utils/handleCopy';
 
 function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInvalid }) {
   const [showInvalidMessage, setShowInvalidMessage] = useState(false);
@@ -18,10 +19,6 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInv
     };
   }, [value, isInvalid]);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(value);
-    showToast('Copied to clipboard!');
-  };
 
   return (
     <div className="mb-4">
@@ -41,7 +38,7 @@ function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInv
             <button
               type="button"
               title='Copy URL'
-              onClick={handleCopy}
+              onClick={() => handleCopy(value)}
               className="absolute right-2 top-1/2 transform -translate-y-1/2 text-purple-700">
               <Copy size={20} />
             </button>
