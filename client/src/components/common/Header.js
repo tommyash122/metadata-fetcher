@@ -11,7 +11,7 @@ function Header() {
     };
 
     return (
-        <header className="bg-gradient-to-r from-purple-100 to-purple-300 sticky top-0 z-20 w-full shadow-md p-4">
+        <header className="bg-gradient-to-r from-purple-50 to-purple-100 sticky top-0 z-20 w-full shadow-md p-4">
             <div className="container mx-auto flex items-center justify-between">
                 {/* Logo with SVG Icon */}
                 <div className="flex items-center space-x-2">
@@ -55,7 +55,7 @@ function Header() {
 
             {/* Mobile Navigation */}
             {isMenuOpen && (
-                <nav className="sm:hidden bg-gradient-to-r from-purple-100 to-purple-300 text-gray-800 p-4 space-y-4">
+                <nav className="sm:hidden bg-gradient-to-r from-purple-50 to-purple-100 text-gray-800 p-4 space-y-4">
                     <NavLink 
                         to="/" 
                         onClick={toggleMenu} 
