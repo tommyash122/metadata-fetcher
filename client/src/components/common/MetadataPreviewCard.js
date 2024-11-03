@@ -46,7 +46,7 @@ function MetadataPreviewCard({
                                 DOMPurify.sanitize(currentTitle)
                             )}
                         </h3>
-                        <div ref={menuRef}>
+                        {/* <div ref={menuRef}>
                             <DropdownMenu
                                 isOpen={isOpen}
                                 onToggle={onToggle}
@@ -54,7 +54,7 @@ function MetadataPreviewCard({
                                 onReset={() => resetMetadata(index)}
                                 isEditing={isEditing}
                             />
-                        </div>
+                        </div> */}
                     </div>
                     {isEditing ? (
                         <textarea
