@@ -6,6 +6,7 @@ import MetadataPage from './pages/MetadataPage';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import { MetadataProvider } from './hooks/MetadataContext';
+import { ToastManager } from './components/common/ToastManager';
 
 
 function App() {
@@ -24,8 +25,9 @@ function App() {
           <Footer />
         </div>
       </Router>
+      <ToastManager />
     </MetadataProvider>
-
+    
   );
 }
 

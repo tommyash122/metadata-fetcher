@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from '../components/form/Form';
 import MetadataDisplay from '../components/form/MetadataDisplay';
 import { fetchMetadata } from '../services/fetchMetadata';
-import { ToastManager, showErrorToast } from '../components/common/ToastManager';
+import { showErrorToast } from '../components/common/ToastManager';
 import validator from 'validator';
 import { useMetadata } from '../hooks/MetadataContext';
 
@@ -116,7 +116,6 @@ function Home() {
         invalidUrls={invalidUrls}
         onReset={handleReset}
       />
-      <ToastManager />
       {metadata.length > 0 && (
         <MetadataDisplay
           metadata={metadata}
