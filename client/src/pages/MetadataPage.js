@@ -23,7 +23,7 @@ const MetadataPage = () => {
   );
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen flex justify-center items-center">
+    <div className="p-6 min-h-screen flex justify-center items-center">
       <div className="w-full max-w-screen-md flex flex-col items-center space-y-6">
         <img
           src={item.image}
