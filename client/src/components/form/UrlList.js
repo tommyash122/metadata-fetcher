@@ -3,7 +3,7 @@ import UrlInput from './UrlInput';
 import { useSelector } from 'react-redux';
 import { selectUrls } from '../../services/metadataSlice';
 
-function UrlList({ onChange, onRemoveUrl, invalidUrls }) {
+function UrlList({ onRemoveUrl, invalidUrls }) {
     const urls = useSelector(selectUrls);
   
   return (
@@ -13,7 +13,6 @@ function UrlList({ onChange, onRemoveUrl, invalidUrls }) {
           key={index}
           index={index}
           value={url}
-          onChange={onChange}
           onRemoveUrl={onRemoveUrl}
           showRemoveButton={urls.length > 1}
           isInvalid={invalidUrls[index]}

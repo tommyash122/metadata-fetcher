@@ -3,8 +3,15 @@ import UrlList from './UrlList';
 import { Plus, RotateCcw, Send } from 'lucide-react';
 import { ClipLoader } from 'react-spinners';
 import { showErrorToast } from '../common/ToastManager';
+import { useDispatch } from 'react-redux';
+import { addUrl } from '../../services/metadataSlice';
 
-function Form({ onAddUrl, onRemoveUrl, onSubmit, error, isLoading, invalidUrls, onReset }) {
+function Form({ onRemoveUrl, onSubmit, error, isLoading, invalidUrls, onReset }) {
+  const dispatch = useDispatch();
+
+  const handleAddUrl = () => {
+    dispatch(addUrl());
+  };
 
   useEffect(() => {
     if (error) {
@@ -28,7 +35,7 @@ function Form({ onAddUrl, onRemoveUrl, onSubmit, error, isLoading, invalidUrls, 
         </button>
         <button 
           type="button" 
-          onClick={onAddUrl} 
+          onClick={handleAddUrl} 
           title="Add URL"
           className={`border border-purple-500 text-purple-500 font-bold py-2 px-4 rounded shadow flex items-center justify-center bg-white hover:bg-purple-100 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={isLoading}

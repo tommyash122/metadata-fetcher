@@ -6,8 +6,6 @@ import { fetchMetadata } from '../services/fetchMetadata';
 import { showErrorToast } from '../components/common/ToastManager';
 import validator from 'validator';
 import {
-  setUrls,
-  addUrl,
   removeUrl,
   setMetadata,
   setEditedMetadata,
@@ -35,9 +33,7 @@ function Home() {
 
    
 
-  const handleAddUrl = () => {
-    dispatch(addUrl());
-  };
+  
 
   const handleRemoveUrl = (index) => {
     dispatch(removeUrl(index));
@@ -88,7 +84,6 @@ function Home() {
         You can add or remove URLs as needed, and when you're ready, click Submit to retrieve the metadata.
       </p>
       <Form
-        onAddUrl={handleAddUrl}
         onRemoveUrl={handleRemoveUrl}
         onSubmit={handleSubmit}
         isLoading={isLoading}
