@@ -3,11 +3,12 @@ import UrlList from './UrlList';
 import { Plus, RotateCcw, Send } from 'lucide-react';
 import { ClipLoader } from 'react-spinners';
 import { showErrorToast } from '../common/ToastManager';
-import { useDispatch } from 'react-redux';
-import { addUrl } from '../../services/metadataSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUrl, selectLoading } from '../../services/metadataSlice';
 
-function Form({ onSubmit, error, isLoading, invalidUrls, onReset }) {
+function Form({ onSubmit, error, invalidUrls, onReset }) {
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectLoading);
 
   const handleAddUrl = () => {
     dispatch(addUrl());

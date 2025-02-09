@@ -6,7 +6,6 @@ import { fetchMetadata } from '../services/fetchMetadata';
 import { showErrorToast } from '../components/common/ToastManager';
 import validator from 'validator';
 import {
-  removeUrl,
   setMetadata,
   setEditedMetadata,
   toggleEditing,
@@ -17,7 +16,6 @@ import {
   selectMetadata,
   selectEditedMetadata,
   selectIsEditing,
-  selectLoading,
   selectInvalidUrls,
 } from '../services/metadataSlice'
 
@@ -28,7 +26,6 @@ function Home() {
   const metadata = useSelector(selectMetadata);
   const editedMetadata = useSelector(selectEditedMetadata);
   const isEditing = useSelector(selectIsEditing);
-  const isLoading = useSelector(selectLoading);
   const invalidUrls = useSelector(selectInvalidUrls);
 
   const handleReset = () => {
@@ -77,7 +74,6 @@ function Home() {
       </p>
       <Form
         onSubmit={handleSubmit}
-        isLoading={isLoading}
         invalidUrls={invalidUrls}
         onReset={handleReset}
       />
