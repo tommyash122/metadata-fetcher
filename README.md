@@ -14,6 +14,7 @@ Metadata Fetcher is a powerful and efficient application that allows you to retr
 - **Error Handling**: Robust error management on both the client and server sides.
 - **Editable Metadata**: Edit the fetched metadata directly within the results view.
 - **Responsive Design**: The app is fully responsive and looks great on all devices.
+- **Redux State Management**: Efficient global state handling using Redux for seamless data flow.
 - **Persistent Data**: Automatically saves your session data and restores it when you revisit.
 - **Unit Testing**: Comprehensive tests ensure the reliability of both the front-end and back-end.
 - **Ease of Use**: Intuitive UI with features like adding/removing URLs, editing metadata, and resetting data.
