@@ -1,9 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 import Form from './components/form/Form';
-import UrlList from './components/form/UrlList';
 import UrlInput from './components/form/UrlInput';
-import MetadataDisplay from './components/form/MetadataDisplay';
+import { useDispatch } from 'react-redux';
 
 // Test 1: Navigation between Home and About pages
 test('should navigate between Home and About pages correctly', async () => {
