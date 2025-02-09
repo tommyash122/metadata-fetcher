@@ -43,15 +43,8 @@ test('should add and remove URL input fields', () => {
 
   render(
     <Form
-      urls={urls}
-      onChange={jest.fn()}
-      onAddUrl={mockOnAddUrl}
-      onRemoveUrl={mockOnRemoveUrl}
       onSubmit={jest.fn()}
       error={null}
-      isLoading={false}
-      invalidUrls={[]}
-      onReset={jest.fn()}
     />
   );
 
@@ -119,7 +112,7 @@ test('should add and remove URL input fields', () => {
 
 // Test 4: Display invalid URL message
 test('should display an invalid URL message when the input is invalid, waiting up to 5 seconds', async () => {
-  render(<UrlInput index={0} value="invalid-url" onChange={jest.fn()} onRemoveUrl={jest.fn()} showRemoveButton={true} isInvalid={true} />);
+  render(<UrlInput index={0} value="invalid-url" showRemoveButton={true} isInvalid={true} />);
 
   // Wait for the invalid message to appear, with a maximum wait time of 5 seconds
   await waitFor(() => {
@@ -132,7 +125,11 @@ test('should call onSubmit with valid URLs', () => {
   const validUrls = ['https://validurl1.com', 'https://validurl2.com'];
   const mockOnSubmit = jest.fn();
 
-  render(<Form urls={validUrls} onChange={jest.fn()} onAddUrl={jest.fn()} onRemoveUrl={jest.fn()} onSubmit={mockOnSubmit} error={null} isLoading={false} invalidUrls={[]} onReset={jest.fn()} />);
+  render(
+    <Form
+      onSubmit={mockOnSubmit}
+      error={null}
+    />);
 
   // Click the submit button
   fireEvent.click(screen.getByTitle(/Submit URLs/i));
