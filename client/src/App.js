@@ -5,13 +5,12 @@ import About from './pages/About';
 import MetadataPage from './pages/MetadataPage';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
-import { MetadataProvider } from './hooks/MetadataContext';
 import { ToastManager } from './components/common/ToastManager';
 
 
 function App() {
   return (
-    <MetadataProvider>
+    <>
       <Router>
         <div className="font-mono container mx-auto pb-16">
           <Header />
@@ -26,8 +25,7 @@ function App() {
         </div>
       </Router>
       <ToastManager />
-    </MetadataProvider>
-    
+    </>
   );
 }
 

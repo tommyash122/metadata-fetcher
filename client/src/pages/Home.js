@@ -11,7 +11,6 @@ import {
   toggleEditing,
   setLoading,
   setInvalidUrls,
-  resetState,
   selectUrls,
   selectMetadata,
   selectEditedMetadata,
