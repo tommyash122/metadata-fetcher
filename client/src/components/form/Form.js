@@ -6,7 +6,7 @@ import { showErrorToast } from '../common/ToastManager';
 import { useDispatch } from 'react-redux';
 import { addUrl } from '../../services/metadataSlice';
 
-function Form({ onRemoveUrl, onSubmit, error, isLoading, invalidUrls, onReset }) {
+function Form({ onSubmit, error, isLoading, invalidUrls, onReset }) {
   const dispatch = useDispatch();
 
   const handleAddUrl = () => {
@@ -21,7 +21,7 @@ function Form({ onRemoveUrl, onSubmit, error, isLoading, invalidUrls, onReset })
 
   return (
     <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4">
-      <UrlList onRemoveUrl={onRemoveUrl} invalidUrls={invalidUrls}/>
+      <UrlList invalidUrls={invalidUrls}/>
       
       <div className="flex justify-center space-x-4">
         <button 

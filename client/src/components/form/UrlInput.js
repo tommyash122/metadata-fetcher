@@ -4,13 +4,17 @@ import handleCopy from '../../utils/handleCopy';
 import { useDispatch } from 'react-redux';
 import { removeUrl, setUrls } from '../../services/metadataSlice';
 
-function UrlInput({ index, value, onRemoveUrl, showRemoveButton, isInvalid }) {
+function UrlInput({ index, value, showRemoveButton, isInvalid }) {
   const dispatch = useDispatch();
   const [showInvalidMessage, setShowInvalidMessage] = useState(false);
 
   const handleChange = (index, value) => {
     dispatch(setUrls({ index, value }));
   }; 
+
+  const handleRemoveUrl = (index) => {
+    dispatch(removeUrl(index));
+  };
   
   useEffect(() => {
     // Clear the message when the user starts typing
@@ -54,7 +58,7 @@ function UrlInput({ index, value, onRemoveUrl, showRemoveButton, isInvalid }) {
           <button
             type="button"
             title='Remove URL'
-            onClick={() => onRemoveUrl(index)}
+            onClick={() => handleRemoveUrl(index)}
             className="border border-red-500 text-red-500 font-bold py-2 px-2 rounded shadow flex items-center justify-center bg-white hover:bg-red-100">
             <X size={20} />
           </button>

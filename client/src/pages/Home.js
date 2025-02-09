@@ -31,14 +31,6 @@ function Home() {
   const isLoading = useSelector(selectLoading);
   const invalidUrls = useSelector(selectInvalidUrls);
 
-   
-
-  
-
-  const handleRemoveUrl = (index) => {
-    dispatch(removeUrl(index));
-  };
-
   const handleReset = () => {
     dispatch(resetState());
   };
@@ -84,7 +76,6 @@ function Home() {
         You can add or remove URLs as needed, and when you're ready, click Submit to retrieve the metadata.
       </p>
       <Form
-        onRemoveUrl={handleRemoveUrl}
         onSubmit={handleSubmit}
         isLoading={isLoading}
         invalidUrls={invalidUrls}
