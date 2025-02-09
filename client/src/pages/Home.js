@@ -34,10 +34,8 @@ function Home() {
   const invalidUrls = useSelector(selectInvalidUrls);
 
   const handleChange = (index, value) => {
-    const newUrls = [...urls];
-    newUrls[index] = value;
-    dispatch(setUrls(newUrls));
-  };
+    dispatch(setUrls({ index, value }));
+  };  
 
   const handleAddUrl = () => {
     dispatch(addUrl());
