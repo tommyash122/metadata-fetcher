@@ -33,9 +33,7 @@ function Home() {
   const isLoading = useSelector(selectLoading);
   const invalidUrls = useSelector(selectInvalidUrls);
 
-  const handleChange = (index, value) => {
-    dispatch(setUrls({ index, value }));
-  };  
+   
 
   const handleAddUrl = () => {
     dispatch(addUrl());
@@ -90,7 +88,6 @@ function Home() {
         You can add or remove URLs as needed, and when you're ready, click Submit to retrieve the metadata.
       </p>
       <Form
-        onChange={handleChange}
         onAddUrl={handleAddUrl}
         onRemoveUrl={handleRemoveUrl}
         onSubmit={handleSubmit}
