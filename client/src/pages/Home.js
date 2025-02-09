@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Form from '../components/form/Form';
 import MetadataDisplay from '../components/form/MetadataDisplay';
 import { fetchMetadata } from '../services/fetchMetadata';
 import { showErrorToast } from '../components/common/ToastManager';
-import validator from 'validator';
 import {
   setMetadata,
   setEditedMetadata,
   toggleEditing,
   setLoading,
-  setInvalidUrls,
   selectUrls,
   selectMetadata,
   selectEditedMetadata,
@@ -27,11 +25,6 @@ function Home() {
   const isEditing = useSelector(selectIsEditing);
   const invalidUrls = useSelector(selectInvalidUrls);
   
-  useEffect(() => {
-    const invalids = urls.map(url => url.trim() !== '' && !validator.isURL(url));
-    dispatch(setInvalidUrls(invalids));
-  }, [urls, dispatch]);
-
   const handleSubmit = async () => {
     dispatch(setMetadata([]));
     dispatch(setLoading(true));
