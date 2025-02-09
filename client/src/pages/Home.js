@@ -27,11 +27,7 @@ function Home() {
   const editedMetadata = useSelector(selectEditedMetadata);
   const isEditing = useSelector(selectIsEditing);
   const invalidUrls = useSelector(selectInvalidUrls);
-
-  const handleReset = () => {
-    dispatch(resetState());
-  };
-
+  
   useEffect(() => {
     const invalids = urls.map(url => url.trim() !== '' && !validator.isURL(url));
     dispatch(setInvalidUrls(invalids));
@@ -74,7 +70,6 @@ function Home() {
       </p>
       <Form
         onSubmit={handleSubmit}
-        onReset={handleReset}
       />
       {metadata.length > 0 && (
         <MetadataDisplay
