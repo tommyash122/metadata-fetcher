@@ -3,8 +3,20 @@ import UrlList from './UrlList';
 import { Plus, RotateCcw, Send } from 'lucide-react';
 import { ClipLoader } from 'react-spinners';
 import { showErrorToast } from '../common/ToastManager';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUrl, selectLoading, resetState } from '../../services/metadataSlice';
 
-function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoading, invalidUrls, onReset }) {
+function Form({ onSubmit, error }) {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectLoading);
+
+  const handleReset = () => {
+    dispatch(resetState());
+  };
+
+  const handleAddUrl = () => {
+    dispatch(addUrl());
+  };
 
   useEffect(() => {
     if (error) {
@@ -14,12 +26,12 @@ function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoadin
 
   return (
     <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4">
-      <UrlList urls={urls} onChange={onChange} onRemoveUrl={onRemoveUrl} invalidUrls={invalidUrls}/>
+      <UrlList />
       
       <div className="flex justify-center space-x-4">
         <button 
           type="button" 
-          onClick={onReset} 
+          onClick={handleReset} 
           title="Reset Form"
           className={`border border-purple-500 text-purple-500 font-bold py-2 px-4 rounded shadow flex items-center justify-center bg-white hover:bg-purple-100 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={isLoading}
@@ -28,7 +40,7 @@ function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoadin
         </button>
         <button 
           type="button" 
-          onClick={onAddUrl} 
+          onClick={handleAddUrl} 
           title="Add URL"
           className={`border border-purple-500 text-purple-500 font-bold py-2 px-4 rounded shadow flex items-center justify-center bg-white hover:bg-purple-100 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
           disabled={isLoading}

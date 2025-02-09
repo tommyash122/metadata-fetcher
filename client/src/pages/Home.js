@@ -1,59 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import Form from '../components/form/Form';
 import MetadataDisplay from '../components/form/MetadataDisplay';
 import { fetchMetadata } from '../services/fetchMetadata';
 import { showErrorToast } from '../components/common/ToastManager';
-import validator from 'validator';
-import { useMetadata } from '../hooks/MetadataContext';
+import {
+  setMetadata,
+  setEditedMetadata,
+  toggleEditing,
+  setLoading,
+  selectUrls,
+  selectMetadata,
+  selectEditedMetadata,
+  selectIsEditing,
+  selectInvalidUrls,
+} from '../services/metadataSlice'
 
 function Home() {
-  const [urls, setUrls] = useState(JSON.parse(localStorage.getItem('urls')) || ['']);
-  const { metadata, setMetadata } = useMetadata();
-  const [editedMetadata, setEditedMetadata] = useState({});
-  const [isEditing, setIsEditing] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [invalidUrls, setInvalidUrls] = useState([]);
+  const dispatch = useDispatch();
 
-  const handleChange = (index, value) => {
-    const newUrls = [...urls];
-    newUrls[index] = value;
-    setUrls(newUrls);
-    localStorage.setItem('urls', JSON.stringify(newUrls));
-  };
-
-  const handleAddUrl = () => {
-    const newUrls = [...urls, ''];
-    setUrls(newUrls);
-    localStorage.setItem('urls', JSON.stringify(newUrls));
-  };
-
-  const handleRemoveUrl = (index) => {
-    const newUrls = urls.filter((_, i) => i !== index);
-    setUrls(newUrls.length > 0 ? newUrls : ['']); // Ensure at least one URL field remains
-    localStorage.setItem('urls', JSON.stringify(newUrls.length > 0 ? newUrls : ['']));
-  };
-
-  const handleReset = () => {
-    setUrls(['']);
-    setMetadata([]);
-    setEditedMetadata({});
-    setIsEditing({});
-    localStorage.removeItem('urls');
-    localStorage.removeItem('metadata');
-  };
-
-  useEffect(() => {
-    const invalids = urls.map(url => url.trim() !== '' && !validator.isURL(url));
-    setInvalidUrls(invalids);
-  }, [urls]);
-
+  const urls = useSelector(selectUrls);
+  const metadata = useSelector(selectMetadata);
+  const editedMetadata = useSelector(selectEditedMetadata);
+  const isEditing = useSelector(selectIsEditing);
+  const invalidUrls = useSelector(selectInvalidUrls);
+  
   const handleSubmit = async () => {
-    setMetadata([]);
-    setIsLoading(true);
+    dispatch(setMetadata([]));
+    dispatch(setLoading(true));
 
     if (invalidUrls.some(isInvalid => isInvalid)) {
       showErrorToast('One or more URLs are invalid.');
-      setIsLoading(false);
+      dispatch(setLoading(false));
       return;
     }
 
@@ -66,38 +44,14 @@ function Home() {
         showErrorToast(`Some URLs failed to load: ${errors.map(e => e.error).join(', ')}`);
       }
 
-      setMetadata(metadata.filter(item => !item.error));
+      dispatch(setMetadata(metadata.filter(item => !item.error)));
       localStorage.setItem('metadata', JSON.stringify(metadata.filter(item => !item.error)));
     } catch (error) {
       console.error('Error fetching metadata:', error);
       showErrorToast('An error occurred while fetching metadata');
     } finally {
-      setIsLoading(false);
+      dispatch(setLoading(false));
     }
-  };
-
-  const handleEditMetadata = (index, field, value) => {
-    setEditedMetadata(prevState => ({
-      ...prevState,
-      [index]: {
-        ...prevState[index],
-        [field]: value
-      }
-    }));
-  };
-
-  const toggleEditMode = (index) => {
-    setIsEditing(prevState => ({
-      ...prevState,
-      [index]: !prevState[index]
-    }));
-  };
-
-  const resetMetadata = (index) => {
-    setEditedMetadata(prevState => ({
-      ...prevState,
-      [index]: { ...metadata[index] }
-    }));
   };
 
   return (
@@ -107,23 +61,16 @@ function Home() {
         You can add or remove URLs as needed, and when you're ready, click Submit to retrieve the metadata.
       </p>
       <Form
-        urls={urls}
-        onChange={handleChange}
-        onAddUrl={handleAddUrl}
-        onRemoveUrl={handleRemoveUrl}
         onSubmit={handleSubmit}
-        isLoading={isLoading}
-        invalidUrls={invalidUrls}
-        onReset={handleReset}
       />
       {metadata.length > 0 && (
         <MetadataDisplay
           metadata={metadata}
           editedMetadata={editedMetadata}
-          onEditMetadata={handleEditMetadata}
+          onEditMetadata={(index, field, value) => dispatch(setEditedMetadata({ index, field, value }))}
           isEditing={isEditing}
-          toggleEditMode={toggleEditMode}
-          resetMetadata={resetMetadata}
+          toggleEditMode={(index) => dispatch(toggleEditing(index))}
+          resetMetadata={(index) => dispatch(setEditedMetadata({ index, field: "reset" }))}
         />
       )}
     </div>

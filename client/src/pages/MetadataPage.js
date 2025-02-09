@@ -1,12 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useMetadata } from '../hooks/MetadataContext';
 import { Copy } from 'lucide-react';
 import handleCopy from '../utils/handleCopy';
+import { selectMetadata } from '../services/metadataSlice';
+import { useSelector } from 'react-redux';
 
 const MetadataPage = () => {
   const { index } = useParams();
-  const { metadata } = useMetadata();
+  const metadata = useSelector(selectMetadata);
 
   const metadataIndex = parseInt(index, 10);
   const item = metadata ? metadata[metadataIndex] : null;
