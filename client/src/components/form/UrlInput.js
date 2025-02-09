@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Copy, X } from 'lucide-react';
-import { showToast } from '../common/ToastManager';
-import handleCopy from '../../utils/handleCopy';
+import handleCopy from '../../utils/handleCopy'; 
 
 function UrlInput({ index, value, onChange, onRemoveUrl, showRemoveButton, isInvalid }) {
   const [showInvalidMessage, setShowInvalidMessage] = useState(false);
