@@ -60,6 +60,13 @@ const metadataSlice = createSlice({
   },
 });
 
+export const selectUrls = (state) => state.metadata.urls;
+export const selectMetadata = (state) => state.metadata.metadata;
+export const selectEditedMetadata = (state) => state.metadata.editedMetadata;
+export const selectIsEditing = (state) => state.metadata.isEditing;
+export const selectLoading = (state) => state.metadata.isLoading;
+export const selectInvalidUrls = (state) => state.metadata.invalidUrls;
+
 export const {
   setUrls,
   addUrl,
