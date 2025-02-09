@@ -74,7 +74,6 @@ function Home() {
       </p>
       <Form
         onSubmit={handleSubmit}
-        invalidUrls={invalidUrls}
         onReset={handleReset}
       />
       {metadata.length > 0 && (

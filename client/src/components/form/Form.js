@@ -6,7 +6,7 @@ import { showErrorToast } from '../common/ToastManager';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUrl, selectLoading } from '../../services/metadataSlice';
 
-function Form({ onSubmit, error, invalidUrls, onReset }) {
+function Form({ onSubmit, error, onReset }) {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectLoading);
 
@@ -22,7 +22,7 @@ function Form({ onSubmit, error, invalidUrls, onReset }) {
 
   return (
     <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4">
-      <UrlList invalidUrls={invalidUrls}/>
+      <UrlList />
       
       <div className="flex justify-center space-x-4">
         <button 
