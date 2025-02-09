@@ -1,8 +1,11 @@
 import React from 'react';
 import UrlInput from './UrlInput';
+import { useSelector } from 'react-redux';
+import { selectUrls } from '../../services/metadataSlice';
 
-function UrlList({ urls, onChange, onRemoveUrl, invalidUrls }) {
-
+function UrlList({ onChange, onRemoveUrl, invalidUrls }) {
+    const urls = useSelector(selectUrls);
+  
   return (
     <div className="p-8 pt-16 max-w-6xl mx-auto">
       {urls.map((url, index) => (

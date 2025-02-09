@@ -4,7 +4,7 @@ import { Plus, RotateCcw, Send } from 'lucide-react';
 import { ClipLoader } from 'react-spinners';
 import { showErrorToast } from '../common/ToastManager';
 
-function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoading, invalidUrls, onReset }) {
+function Form({ onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoading, invalidUrls, onReset }) {
 
   useEffect(() => {
     if (error) {
@@ -14,7 +14,7 @@ function Form({ urls, onChange, onAddUrl, onRemoveUrl, onSubmit, error, isLoadin
 
   return (
     <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="space-y-4">
-      <UrlList urls={urls} onChange={onChange} onRemoveUrl={onRemoveUrl} invalidUrls={invalidUrls}/>
+      <UrlList onChange={onChange} onRemoveUrl={onRemoveUrl} invalidUrls={invalidUrls}/>
       
       <div className="flex justify-center space-x-4">
         <button 

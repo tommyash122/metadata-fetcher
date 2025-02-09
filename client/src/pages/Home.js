@@ -90,7 +90,6 @@ function Home() {
         You can add or remove URLs as needed, and when you're ready, click Submit to retrieve the metadata.
       </p>
       <Form
-        urls={urls}
         onChange={handleChange}
         onAddUrl={handleAddUrl}
         onRemoveUrl={handleRemoveUrl}
