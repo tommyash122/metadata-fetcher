@@ -12,7 +12,7 @@ function Header() {
 
     return (
         <header className="bg-gradient-to-r from-purple-50 to-purple-100 sticky top-0 z-20 w-full shadow-md p-4">
-            <div className="container mx-auto flex items-center justify-between">
+            <div className="mx-auto flex items-center justify-between">
                 {/* Logo with SVG Icon */}
                 <div className="flex items-center space-x-2">
                     <img src={LogoIcon} alt="Logo Icon" className="w-10 h-10" />

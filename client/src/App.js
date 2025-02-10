@@ -12,8 +12,8 @@ function App() {
   return (
     <>
       <Router>
+        <Header />
         <div className="font-mono container mx-auto pb-16">
-          <Header />
           <div className="mt-8">
             <Routes>
               <Route path="/" element={<Home />} />
