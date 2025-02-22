@@ -62,6 +62,9 @@ jobs:
                 ssh -o StrictHostKeyChecking=no -i ~/.ssh/metadata-fetcher-server.pem ubuntu@54.166.223.59 << 'EOF'
                   cd /home/ubuntu/metadata-fetcher/server
                   git pull origin main
+                  curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+                  sudo apt-get install -y nodejs
+                  sudo npm install -g pm2
                   npm install
                   pm2 restart server --update-env
                 EOF
