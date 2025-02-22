@@ -52,14 +52,9 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Set up SSH
-              uses: webfactory/ssh-agent@v0.5.4
-              with:
-                  ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-
             - name: Deploy to EC2
               run: |
-                ssh -o StrictHostKeyChecking=no -i ~/.ssh/metadata-fetcher-server.pem ubuntu@ec2-54-166-223-59.compute-1.amazonaws.com << 'EOF'
+                ssh -o StrictHostKeyChecking=no -i /home/ubuntu/.ssh/metadata-fetcher-server.pem ubuntu@ec2-54-166-223-59.compute-1.amazonaws.com << 'EOF'
                   cd /home/ubuntu/metadata-fetcher/server
                   git pull origin main
                   sudo pm2 restart server --update-env
