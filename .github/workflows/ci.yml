@@ -52,10 +52,18 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Create SSH key
+              run: |
+                mkdir -p ~/.ssh
+                echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/metadata-fetcher-server.pem
+                chmod 400 ~/.ssh/metadata-fetcher-server.pem
+
             - name: Deploy to EC2
               run: |
-                ssh -o StrictHostKeyChecking=no -i /home/ubuntu/.ssh/metadata-fetcher-server.pem ubuntu@ec2-54-166-223-59.compute-1.amazonaws.com << 'EOF'
+                ssh -o StrictHostKeyChecking=no -i ~/.ssh/metadata-fetcher-server.pem ubuntu@ec2-54-166-223-59.compute-1.amazonaws.com << 'EOF'
                   cd /home/ubuntu/metadata-fetcher/server
                   git pull origin main
-                  sudo pm2 restart server --update-env
+                  pm2 list
+                  pm2 delete server || true
+                  pm2 start server.js --name server
                 EOF
