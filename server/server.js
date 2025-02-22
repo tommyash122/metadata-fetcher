@@ -66,8 +66,8 @@ app.get('/', (req, res) => {
         <title>${title}</title>
       </head>
       <body style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
-        <h1>Welcome to the Metadata Fetcher Application</h1>
-        <p>This server powers the awesome Metadata Fetcher app, designed to extract and present metadata from any URL you provide.</p>
+        <h1>Welcome to the Bolt Fetcher Application</h1>
+        <p>This server powers the awesome Bolt Fetcher app, designed to extract and present metadata from any URL you provide.</p>
         <p>Whether you're looking to grab a website's title, description, or other key details, this service is here to help!</p>
         <p><em>Stay tuned for more features and enhancements.</em></p>
       </body>
