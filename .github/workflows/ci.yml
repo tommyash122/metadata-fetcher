@@ -63,5 +63,7 @@ jobs:
                 ssh -o StrictHostKeyChecking=no -i ~/.ssh/metadata-fetcher-server.pem ubuntu@ec2-54-166-223-59.compute-1.amazonaws.com << 'EOF'
                   cd /home/ubuntu/metadata-fetcher/server
                   git pull origin main
-                  sudo pm2 restart server --update-env
+                  pm2 list
+                  pm2 delete server || true
+                  pm2 start server.js --name server
                 EOF
