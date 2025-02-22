@@ -59,7 +59,7 @@ jobs:
 
             - name: Deploy to EC2
               run: |
-                sudo ssh -o StrictHostKeyChecking=no -i ~/.ssh/metadata-fetcher-server.pem ubuntu@ec2-54-166-223-59.compute-1.amazonaws.com << 'EOF'
+                sudo ssh -o StrictHostKeyChecking=no -i ~/.ssh/metadata-fetcher-server.pem ubuntu@54.166.223.59 << 'EOF'
                   cd /home/ubuntu/metadata-fetcher/server
                   git pull origin main
                   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
